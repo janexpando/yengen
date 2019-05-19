@@ -18,7 +18,7 @@ export default class Generate extends Command {
         {
             name: 'file',
             default: './openapi.json',
-            description: 'OpenAPI file location',
+            description: 'OpenAPI file location'
         }
     ];
 

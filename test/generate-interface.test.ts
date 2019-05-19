@@ -1,74 +1,56 @@
 import { TypeBuilder } from '../src/generators';
-import { SourceFile, Project } from 'ts-morph';
+import { Project } from 'ts-morph';
 import { expect } from 'chai';
 import { getOpenAPIConfig } from '../src/openapi';
 
 describe('generate interface', function() {
-    let source: SourceFile;
-    let typeBuilder: TypeBuilder;
-
-    function result() {
-        return expect(source.getFullText());
+    async function createSourceFile(file: string): Promise<string> {
+        let project = new Project({ useVirtualFileSystem: true });
+        let source = project.createSourceFile('generated.ts');
+        let config = await getOpenAPIConfig(file);
+        let typeBuilder = new TypeBuilder(config);
+        source.set({ statements: [typeBuilder.createTypings()] });
+        return source.getFullText();
     }
 
-    beforeEach(() => {
-        let project = new Project({ useVirtualFileSystem: true });
-        source = project.createSourceFile('generated.ts');
-        typeBuilder = new TypeBuilder(source);
-    });
-    it('should create sample interface with name', function() {
-        typeBuilder.createRootType('Product', { type: 'object' });
-        result().to.contains('interface Product');
-    });
-    it('should create properties', function() {
-        typeBuilder.createRootType('Product', {
-            type: 'object',
-            properties: {
-                sku: {
-                    type: 'string'
-                }
-            }
-        });
-        result().to.be.eq('interface Product {\n    sku: string;\n}\n');
-    });
     it('should create multiple types', async function() {
-        let config = await getOpenAPIConfig('test/fixtures/openapi_references.yml');
-        typeBuilder.createTypingsFromDocument(config);
-        expect(typeBuilder.source.getFullText()).to.be.eq(`interface Order {
-    id: string;
-    product: Product;
-}
+        expect(await createSourceFile('test/fixtures/openapi_references.yml')).to.be
+            .eq(`export namespace ApiSchemas {
+    export interface Order {
+        id: string;
+        product: Product;
+    }
 
-interface Product {
-    sku: string;
-    name: string;
-    prices: string[];
+    export interface Product {
+        sku: string;
+        name: string;
+        prices: string[];
+    }
 }
 `);
     });
 
     it('should create deep literals', async function() {
-        let config = await getOpenAPIConfig('test/fixtures/deep_literals.yml');
-        typeBuilder.createTypingsFromDocument(config);
-        expect(typeBuilder.source.getFullText()).to.be.eq(`interface Order {
-    id: string;
-    product: Product;
-}
+        expect(await createSourceFile('test/fixtures/deep_literals.yml')).to.be
+            .eq(`export namespace ApiSchemas {
+    export interface Order {
+        id: string;
+        product: Product;
+    }
 
-interface Product {
-    sku: string;
-    name: string;
-    prices: {
-            marketplace: "amazon_de" | "amazon_it" | "amazon_uk" | "amazon_fr";
-            price: number;
-        }[];
+    export interface Product {
+        sku: string;
+        name: string;
+        prices: {
+                marketplace: "amazon_de" | "amazon_it" | "amazon_uk" | "amazon_fr";
+                price: number;
+            }[];
+    }
 }
 `);
     });
     it('should be able to generate from complex files', async function() {
-        let config = await getOpenAPIConfig('test/fixtures/complex_types.yml');
-        typeBuilder.createTypingsFromDocument(config);
-        expect(typeBuilder.source.getFullText()).to.be
+        expect(createSourceFile('test/fixtures/complex_types.yml')).to.be
             .eq(`type MarketplaceName = "amazon_de" | "amazon_uk" | "amazon_it" | "amazon_fr" | "amazon_es" | "amazon_mx" | "amazon_us" | "amazon_ca" | "amazon_br" | "amazon_in" | "amazon_cn" | "amazon_jp" | "amazon_au";
 type Continent = "america" | "europe";
 
@@ -232,9 +214,7 @@ interface Formula {
 `);
     });
     it('should create types for weird type names', async function() {
-        let config = await getOpenAPIConfig('test/fixtures/weird_type_names.yml');
-        typeBuilder.createTypingsFromDocument(config);
-        expect(typeBuilder.source.getFullText()).to.be
+        expect(createSourceFile('test/fixtures/weird_type_names.yml')).to.be
             .eq(`interface io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps {
     $schema: string;
     additionalItems: {
@@ -246,10 +226,10 @@ interface Formula {
 `);
     });
     it('should create types for kubernetes api', async function() {
-        let config = await getOpenAPIConfig('test/fixtures/kubernetes_api.yaml');
-        typeBuilder.createTypingsFromDocument(config);
-        expect(typeBuilder.source.getFullText()).to.be.eq(
-            require('fs').readFileSync('./test/fixtures/kubernetes_api_result.ts.txt', { encoding: 'utf-8' })
+        expect(createSourceFile('test/fixtures/kubernetes_api.yaml')).to.be.eq(
+            require('fs').readFileSync('./test/fixtures/kubernetes_api_result.ts.txt', {
+                encoding: 'utf-8'
+            })
         );
     });
 });

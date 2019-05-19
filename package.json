@@ -12,6 +12,7 @@
         "@oclif/parser": "^3.8.0",
         "@oclif/plugin-help": "^2.1.6",
         "@types/lodash": "^4.14.129",
+        "injection-js": "^2.2.1",
         "jsonref": "^5.1.3",
         "lodash": "^4.17.11",
         "prettier": "^1.17.1",
@@ -63,6 +64,7 @@
         "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
         "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
         "test:watch": "mocha -w",
+        "check": "tsc tsconfig.check.json",
         "version": "oclif-dev readme && git add README.md",
         "tslint:fix": "tslint --fix --project .",
         "editor": "docker run -d -p 80:8080 swaggerapi/swagger-editor"

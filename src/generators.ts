@@ -1,9 +1,13 @@
 import {
+    CodeBlockWriter,
+    NamespaceDeclarationStructure,
     OptionalKind,
+    printNode,
     PropertySignatureStructure,
     SourceFile,
-    WriterFunction,
-    CodeBlockWriter
+    StatementStructures,
+    StructureKind,
+    WriterFunction
 } from 'ts-morph';
 import { OpenAPIV3 } from './openapi-types';
 import _ = require('lodash');
@@ -24,61 +28,82 @@ function isEnum(schema: OpenAPIV3.SchemaObject) {
     return schema.enum && schema.enum.length > 0;
 }
 
+export class TypeMap {}
+
 export class TypeBuilder {
     typeMap = new Map<object, string>();
 
-    constructor(public source: SourceFile) {}
+    constructor(private document: OpenAPIV3.Document) {}
 
-    createRootType(name: string, schema: OpenAPIV3.NonArraySchemaObject) {
+    private createRootType(
+        name: string,
+        schema: OpenAPIV3.NonArraySchemaObject
+    ): StatementStructures | null {
         name = this.sanitizeName(name);
         if (isEnum(schema)) {
-            this.source.addTypeAlias({
+            return {
+                kind: StructureKind.TypeAlias,
                 name,
-                type: this.createUnionLiteral(schema)
-            });
-            return;
+                type: this.createUnionLiteral(schema),
+                isExported: true
+            };
         }
         switch (schema.type) {
             case 'object':
-                let declaration = this.source.addInterface({ name });
-                let properties = schema.properties || {};
-                _.forOwn(properties, (property, key) => {
+                const properties: OptionalKind<PropertySignatureStructure>[] = [];
+                let propertySchemas = schema.properties || {};
+                _.forOwn(propertySchemas, (schema, key) => {
                     if (/-/.test(key)) {
                         key = `"${key.replace(/"/g, `\\\"`)}"`;
                     }
                     let propertyStructure: OptionalKind<PropertySignatureStructure> = {
                         name: key
                     };
-                    if (property.type) propertyStructure.type = this.createTypeLiteral(property);
-                    declaration.addProperty(propertyStructure);
+                    if (schema.type) propertyStructure.type = this.createTypeLiteral(schema);
+                    properties.push(propertyStructure);
                 });
-                break;
+                return {
+                    kind: StructureKind.Interface,
+                    name,
+                    properties,
+                    isExported: true
+                };
             case 'integer':
             case 'number':
             case 'null':
             case 'string':
             case 'boolean':
-                this.source.addTypeAlias({
+                return {
+                    kind: StructureKind.TypeAlias,
                     name,
-                    type: schema.type
-                });
-                break;
+                    type: schema.type,
+                    isExported: true
+                };
         }
+        return null;
     }
 
-    createTypingsFromDocument(document: OpenAPIV3.Document) {
-        if (document.components && document.components.schemas) {
-            let schemas = document.components.schemas;
+    createTypings(): NamespaceDeclarationStructure {
+        let statements: StatementStructures[] = [];
+        if (this.document.components && this.document.components.schemas) {
+            let schemas = this.document.components.schemas;
             this.initTypeMap(schemas);
             _.forOwn(schemas, (schema: OpenAPIV3.SchemaObject, typeName: string) => {
                 if (isNonArraySchemaObject(schema)) {
-                    this.createRootType(typeName, schema);
+                    let statement = this.createRootType(typeName, schema);
+                    if (statement) statements.push(statement);
                 }
             });
         }
+        return {
+            kind: StructureKind.Namespace,
+            name: 'ApiSchemas',
+            statements: statements,
+            isExported: true
+        };
     }
 
-    createUnionLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
+    private createUnionLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
         return writer => {
             let choices = schema.enum as any[];
             for (let i = 0; i < choices.length; i++) {
@@ -96,7 +121,7 @@ export class TypeBuilder {
         };
     }
 
-    createTypeLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
+    private createTypeLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
         return (writer: CodeBlockWriter): void => {
             if (this.typeMap.has(schema)) {
                 writer.write(this.typeMap.get(schema) as string);
@@ -142,7 +167,7 @@ export class TypeBuilder {
         };
     }
 
-    sanitizeName(name: string): string {
+    private sanitizeName(name: string): string {
         return name.replace(/[-.]/g, '_');
     }
 
