@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Sample application
+paths:
+  "/orders":
+    get:
+      description: sample get api
+      responses:
+        200:
+          description: Get sample order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        product:
+          $ref: "#/components/schemas/Product"
+    Product:
+      type: object
+      title: Product
+      properties:
+        sku:
+          type: string
+        name:
+          type: string
+        prices:
+          type: array
+          items:
+            type: object
+            properties:
+              marketplace:
+                type: string
+                enum:
+                  - amazon_de
+                  - amazon_it
+                  - amazon_uk
+                  - amazon_fr
+              price:
+                type: number

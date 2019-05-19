@@ -1,0 +1,6 @@
+--require ts-node/register
+--watch-extensions ts
+--recursive
+--reporter spec
+--timeout 5000
+--compilers ts:ts-node/register

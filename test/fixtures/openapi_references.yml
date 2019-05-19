@@ -1,0 +1,26 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Sample application
+paths: {}
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        product:
+          $ref: '#/components/schemas/Product'
+    Product:
+      type: object
+      title: Product
+      properties:
+        sku:
+          type: string
+        name:
+          type: string
+        prices:
+          type: array
+          items:
+            type: string
