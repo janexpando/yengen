@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Sample application
+  description: This piece is from kubernetes api
+paths: {}
+components:
+  schemas:
+    io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps:
+      title: io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps
+      type: object
+      properties:
+        $schema:
+          type: string
+        additionalItems:
+          type: object
+          description: JSONSchemaPropsOrBool represents JSONSchemaProps or a boolean value. Defaults to true for the boolean property.
+        x-kubernetes-embedded-resource:
+          type: boolean
+          description: x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes runtime.Object, with TypeMeta and ObjectMeta. The type must be object. It is allowed to further restrict the embedded object. kind, apiVersion and metadata are validated automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not have to be if the object is fully specified (up to kind, apiVersion, metadata).
+        x-kubernetes-int-or-string:
+          type: boolean
+          description: >-
+            x-kubernetes-int-or-string specifies that this value is either an integer or a string. If this is true, an empty type is allowed and type as child of anyOf is permitted if following one of the following patterns:
+
+
+            1) anyOf:
+               - type: integer
+               - type: string
+            2) allOf:
+               - anyOf:
+                 - type: integer
+                 - type: string
+               - ... zero or more
+        x-kubernetes-preserve-unknown-fields:
+          type: boolean
+          description: x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.
+      description: JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).

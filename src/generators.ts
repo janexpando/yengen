@@ -20,23 +20,50 @@ function isNonArraySchemaObject(
     return schema.type !== 'array';
 }
 
+function isEnum(schema: OpenAPIV3.SchemaObject) {
+    return schema.enum && schema.enum.length > 0;
+}
+
 export class TypeBuilder {
     typeMap = new Map<object, string>();
 
     constructor(public source: SourceFile) {}
 
-    createInterface(name: string, schema: OpenAPIV3.NonArraySchemaObject) {
-        if (schema.type && schema.type !== 'object')
-            throw `Cannot create interface for schema.type=${schema.type}`;
-        let declaration = this.source.addInterface({ name });
-        let properties = schema.properties || {};
-        _.forOwn(properties, (property, key) => {
-            let propertyStructure: OptionalKind<PropertySignatureStructure> = {
-                name: key
-            };
-            if (property.type) propertyStructure.type = this.createTypeLiteral(property);
-            declaration.addProperty(propertyStructure);
-        });
+    createRootType(name: string, schema: OpenAPIV3.NonArraySchemaObject) {
+        name = this.sanitizeName(name);
+        if (isEnum(schema)) {
+            this.source.addTypeAlias({
+                name,
+                type: this.createUnionLiteral(schema)
+            });
+            return;
+        }
+        switch (schema.type) {
+            case 'object':
+                let declaration = this.source.addInterface({ name });
+                let properties = schema.properties || {};
+                _.forOwn(properties, (property, key) => {
+                    if (/-/.test(key)) {
+                        key = `"${key.replace(/"/g, `\\\"`)}"`;
+                    }
+                    let propertyStructure: OptionalKind<PropertySignatureStructure> = {
+                        name: key
+                    };
+                    if (property.type) propertyStructure.type = this.createTypeLiteral(property);
+                    declaration.addProperty(propertyStructure);
+                });
+                break;
+            case 'integer':
+            case 'number':
+            case 'null':
+            case 'string':
+            case 'boolean':
+                this.source.addTypeAlias({
+                    name,
+                    type: schema.type
+                });
+                break;
+        }
     }
 
     createTypingsFromDocument(document: OpenAPIV3.Document) {
@@ -45,57 +72,84 @@ export class TypeBuilder {
             this.initTypeMap(schemas);
             _.forOwn(schemas, (schema: OpenAPIV3.SchemaObject, typeName: string) => {
                 if (isNonArraySchemaObject(schema)) {
-                    this.createInterface(typeName, schema);
+                    this.createRootType(typeName, schema);
                 }
             });
         }
     }
 
-    createTypeLiteral(schema: OpenAPIV3.SchemaObject): string | WriterFunction {
-        if (this.typeMap.has(schema)) {
-            return this.typeMap.get(schema) as string;
-        }
-        switch (schema.type) {
-            case 'boolean':
-                return 'boolean';
-            case 'null':
-                return 'null';
-            case 'string':
-                return 'string';
-            case 'number':
-            case 'integer':
-                return 'number';
-            case 'array':
-                return (writer: CodeBlockWriter) => {
+    createUnionLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
+        return writer => {
+            let choices = schema.enum as any[];
+            for (let i = 0; i < choices.length; i++) {
+                let choice = choices[i];
+                if (typeof choice === 'string') {
+                    writer
+                        .quote()
+                        .write(choice)
+                        .quote();
+                } else {
+                    writer.write(choice.toString());
+                }
+                if (i !== choices.length - 1) writer.write(' | ');
+            }
+        };
+    }
+
+    createTypeLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
+        return (writer: CodeBlockWriter): void => {
+            if (this.typeMap.has(schema)) {
+                writer.write(this.typeMap.get(schema) as string);
+                return;
+            }
+            if (isEnum(schema)) {
+                this.createUnionLiteral(schema)(writer);
+                return;
+            }
+            switch (schema.type) {
+                case 'boolean':
+                    writer.write('boolean');
+                    break;
+                case 'null':
+                    writer.write('null');
+                    break;
+                case 'string':
+                    writer.write('string');
+                    break;
+                case 'number':
+                case 'integer':
+                    writer.write('number');
+                    break;
+                case 'array':
                     let result = this.createTypeLiteral(schema.items);
-                    if (typeof result === 'string') {
-                        writer.write(result);
-                    } else {
-                        result(writer);
-                    }
+                    result(writer);
                     writer.write('[]');
-                };
-            case 'object':
-                return writer => {
-                    writer.block(() => {
+                    break;
+                case 'object':
+                    writer.inlineBlock(() => {
                         _.forOwn(schema.properties, (schema, key) => {
-                            writer.write(key + ':');
-                            let result = this.createTypeLiteral(schema);
-                            if (typeof result === 'string') {
-                                writer.write(result);
-                            } else {
-                                result(writer);
-                            }
+                            writer.write(key + ': ');
+                            this.createTypeLiteral(schema)(writer);
+                            writer.write(';').newLineIfLastNot();
                         });
                     });
-                };
-        }
+                    break;
+                case undefined:
+                case null:
+                    writer.write('any');
+                    break;
+            }
+        };
+    }
+
+    sanitizeName(name: string): string {
+        return name.replace(/[-.]/g, '_');
     }
 
     private initTypeMap(schemas: Record<string, OpenAPIV3.SchemaObject>) {
         if (schemas) {
             _.forOwn(schemas, (schema, typeName) => {
-                this.typeMap.set(schema, typeName);
+                this.typeMap.set(schema, this.sanitizeName(typeName));
             });
         }
     }

@@ -10,14 +10,15 @@ export default class Generate extends Command {
     static description = 'describe the command here';
 
     static flags = {
-        help: flags.help({ char: 'h' })
+        help: flags.help({ char: 'h' }),
+        log: flags.boolean({ char: 'l', description: 'log to stdout' })
     };
 
     static args: any[] = [
         {
             name: 'file',
             default: './openapi.json',
-            description: 'OpenAPI file location'
+            description: 'OpenAPI file location',
         }
     ];
 

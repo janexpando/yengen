@@ -2,5 +2,5 @@
 --watch-extensions ts
 --recursive
 --reporter spec
---timeout 5000
+--timeout 50000
 --compilers ts:ts-node/register

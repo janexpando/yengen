@@ -1,0 +1,325 @@
+openapi: '3.0.0'
+info:
+  version: 0.0.1
+  title: Complex EVE api
+paths: {}
+components:
+  schemas:
+    MarketplaceName:
+      type: string
+      enum:
+        - amazon_de
+        - amazon_uk
+        - amazon_it
+        - amazon_fr
+        - amazon_es
+        - amazon_mx
+        - amazon_us
+        - amazon_ca
+        - amazon_br
+        - amazon_in
+        - amazon_cn
+        - amazon_jp
+        - amazon_au
+    Continent:
+      type: string
+      enum:
+        - america
+        - europe
+    DeveloperConfig:
+      type: object
+      properties:
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        developerId:
+          type: string
+        continent:
+          $ref: '#/components/schemas/Continent'
+    Credentials:
+      type: object
+      properties:
+        marketplaceId:
+          type: string
+        developerId:
+          type: string
+        sellerId:
+          type: string
+        token:
+          type: string
+    Company:
+      type: object
+      properties:
+        _id:
+          type: string
+    FeedType:
+      type: string
+      enum:
+        - GOOGLE_PRODUCT
+        - SHOPIFY
+        - SHOPTET
+    InputCompany:
+      type: object
+      properties:
+        name:
+          type: string
+        feedType:
+          $ref: '#/components/schemas/FeedType'
+    ShipmentItem:
+      type: object
+      properties:
+        itemHash:
+          type: string
+        itemId:
+          type: string
+        quantity:
+          type: integer
+        sku:
+          type: string
+        charges:
+          type: object
+        fees:
+          type: object
+        costOfPointsGranted:
+          type: number
+        costOfPointsReturned:
+          type: number
+        withheldTax:
+          type: number
+        promotions:
+          type: number
+        currency:
+          type: string
+    FinancialEvent:
+      type: object
+      properties:
+        companyId:
+          type: string
+        shipmentHash:
+          type: string
+        marketplaceOrderId:
+          type: string
+        marketplace:
+          type: string
+        postedDate:
+          type: string
+        type:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShipmentItem'
+    ListingStatistics:
+      type: object
+      properties:
+        ok:
+          type: number
+        error:
+          type: number
+    SortParams:
+      type: object
+      properties:
+        sku:
+          type: number
+          enum:
+            - 1
+            - -1
+        name:
+          type: number
+          enum:
+            - 1
+            - -1
+        ean:
+          type: number
+          enum:
+            - 1
+            - -1
+        price:
+          type: number
+          enum:
+            - 1
+            - -1
+    ProductSync:
+      type: object
+      properties:
+        companyId:
+          type: string
+        interval:
+          type: number
+        startedOn:
+          type: string
+        finishedOn:
+          type: string
+        isSyncing:
+          type: boolean
+        feedDownloadStartedOn:
+          type: string
+        feedDownloadFinishedOn:
+          type: string
+        isFeedSyncing:
+          type: boolean
+    OrderStatus:
+      type: string
+      enum:
+        - Unshipped
+        - Pending
+        - Shipped
+        - Canceled
+    CurrencyCode:
+      type: string
+      enum:
+        - EUR
+        - GBP
+        - USD
+        - CAD
+    Address:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        addressLine:
+          type: array
+          items:
+            type: string
+        city:
+          type: string
+        country:
+          type: string
+        district:
+          type: string
+        stateOrRegion:
+          type: string
+        zipCode:
+          type: string
+        countryCode:
+          type: string
+        phone:
+          type: string
+        taxId:
+          type: string
+    OrderItem:
+      type: object
+      properties:
+        sku:
+          type: string
+        asin:
+          type: string
+        marketplaceItemId:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+        itemPrice:
+          type: number
+        quantity:
+          type: number
+        tax:
+          type: number
+        promotionDiscount:
+          type: number
+        promotionDiscountTax:
+          type: number
+        shippingDiscount:
+          type: number
+        shippingDiscountTax:
+          type: number
+        shippingTax:
+          type: number
+        shippingPrice:
+          type: number
+    Order:
+      type: object
+      properties:
+        companyId:
+          type: string
+        marketplaceOrderId:
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        marketplace:
+          $ref: '#/components/schemas/MarketplaceName'
+        fulfillmentChannel:
+          type: string
+        totalPrice:
+          type: number
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        shipServiceLevel:
+          type: string
+        paymentMethod:
+          type: string
+        invoiceUrls:
+          type: array
+          items:
+            type: string
+        buyer:
+          $ref: '#/components/schemas/Address'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        lastChanged:
+          type: string
+        purchaseDate:
+          type: string
+        isPremiumOrder:
+          type: boolean
+        isPrime:
+          type: boolean
+        isBusinessOrder:
+          type: boolean
+        isComplete:
+          type: boolean
+    Settings:
+      type: object
+      properties:
+        companyId:
+          type: string
+        synchronizePrices:
+          type: boolean
+        synchronizeStock:
+          type: boolean
+        listNewProducts:
+          type: boolean
+        formulas:
+          $ref: '#/components/schemas/FormulaMap'
+    FormulaMap:
+      type: object
+      properties:
+        amazon_de:
+          $ref: '#/components/schemas/Formula'
+        amazon_uk:
+          $ref: '#/components/schemas/Formula'
+        amazon_it:
+          $ref: '#/components/schemas/Formula'
+        amazon_fr:
+          $ref: '#/components/schemas/Formula'
+        amazon_es:
+          $ref: '#/components/schemas/Formula'
+        amazon_mx:
+          $ref: '#/components/schemas/Formula'
+        amazon_us:
+          $ref: '#/components/schemas/Formula'
+        amazon_ca:
+          $ref: '#/components/schemas/Formula'
+        amazon_br:
+          $ref: '#/components/schemas/Formula'
+        amazon_in:
+          $ref: '#/components/schemas/Formula'
+        amazon_cn:
+          $ref: '#/components/schemas/Formula'
+        amazon_jp:
+          $ref: '#/components/schemas/Formula'
+        amazon_au:
+          $ref: '#/components/schemas/Formula'
+    Formula:
+      type: object
+      properties:
+        add:
+          type: number
+        multiply:
+          type: number
