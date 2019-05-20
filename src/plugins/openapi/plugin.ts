@@ -2,9 +2,10 @@ import { attempt, object, string } from 'joi';
 import { SourceFile } from 'ts-morph';
 import * as tm from 'ts-morph';
 import { CodegenPlugin, Context, PluginResult } from '../../pipeline';
-import { TypeBuilder } from './generators';
+import { TypeBuilder } from './type-builder';
 import { getOpenAPIConfig } from './openapi';
 import { OpenAPIV3 } from './openapi-types';
+import { TypeMap } from './type-map';
 
 export interface OpenapiPluginConfig {
     openapiFile: string;
@@ -25,7 +26,7 @@ export class OpenapiPlugin implements CodegenPlugin {
         });
         let source: SourceFile = project.createSourceFile(this.config.typingsFile,'', {overwrite: true});
         let config: OpenAPIV3.Document = await getOpenAPIConfig(this.config.openapiFile);
-        let builder = new TypeBuilder(config);
+        let builder = new TypeBuilder(config, new TypeMap(config));
         let namespaceDeclaration = builder.createTypings();
         source.set({ statements: [namespaceDeclaration] });
         context.command.log('Emiting source file to ', this.config.typingsFile);

@@ -2,44 +2,25 @@ import {
     CodeBlockWriter,
     NamespaceDeclarationStructure,
     OptionalKind,
-    printNode,
     PropertySignatureStructure,
-    SourceFile,
     StatementStructures,
     StructureKind,
     WriterFunction
 } from 'ts-morph';
-import { OpenAPIV3 } from './openapi-types';
+import { isEnum, isNonArraySchemaObject, OpenAPIV3 } from './openapi-types';
+import { TypeMap } from './type-map';
 import _ = require('lodash');
-
-function isArraySchemaObject(
-    schema: OpenAPIV3.SchemaObject
-): schema is OpenAPIV3.ArraySchemaObject {
-    return schema.type === 'array';
-}
-
-function isNonArraySchemaObject(
-    schema: OpenAPIV3.SchemaObject
-): schema is OpenAPIV3.NonArraySchemaObject {
-    return schema.type !== 'array';
-}
-
-function isEnum(schema: OpenAPIV3.SchemaObject) {
-    return schema.enum && schema.enum.length > 0;
-}
-
-export class TypeMap {}
+import { sanitizeName } from './utils';
 
 export class TypeBuilder {
-    typeMap = new Map<object, string>();
 
-    constructor(private document: OpenAPIV3.Document) {}
+    constructor(private document: OpenAPIV3.Document, private typeMap: TypeMap) {}
 
     private createRootType(
         name: string,
         schema: OpenAPIV3.NonArraySchemaObject
     ): StatementStructures | null {
-        name = this.sanitizeName(name);
+        name = sanitizeName(name);
         if (isEnum(schema)) {
             return {
                 kind: StructureKind.TypeAlias,
@@ -87,7 +68,6 @@ export class TypeBuilder {
         let statements: StatementStructures[] = [];
         if (this.document.components && this.document.components.schemas) {
             let schemas = this.document.components.schemas;
-            this.initTypeMap(schemas);
             _.forOwn(schemas, (schema: OpenAPIV3.SchemaObject, typeName: string) => {
                 if (isNonArraySchemaObject(schema)) {
                     let statement = this.createRootType(typeName, schema);
@@ -165,17 +145,5 @@ export class TypeBuilder {
                     break;
             }
         };
-    }
-
-    private sanitizeName(name: string): string {
-        return name.replace(/[-.]/g, '_');
-    }
-
-    private initTypeMap(schemas: Record<string, OpenAPIV3.SchemaObject>) {
-        if (schemas) {
-            _.forOwn(schemas, (schema, typeName) => {
-                this.typeMap.set(schema, this.sanitizeName(typeName));
-            });
-        }
     }
 }

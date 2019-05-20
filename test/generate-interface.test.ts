@@ -1,7 +1,9 @@
-import { TypeBuilder } from '../src/plugins/openapi/generators';
+import { describe } from 'mocha';
+import { TypeBuilder } from '../src/plugins/openapi/type-builder';
 import { Project } from 'ts-morph';
 import { expect } from 'chai';
 import { getOpenAPIConfig } from '../src/plugins/openapi/openapi';
+import { TypeMap } from '../src/plugins/openapi/type-map';
 let fs = require('fs');
 
 describe('generate interface', function() {
@@ -9,7 +11,7 @@ describe('generate interface', function() {
         let project = new Project({ useVirtualFileSystem: true });
         let source = project.createSourceFile('generated.ts');
         let config = await getOpenAPIConfig(file);
-        let typeBuilder = new TypeBuilder(config);
+        let typeBuilder = new TypeBuilder(config, new TypeMap(config));
         source.set({ statements: [typeBuilder.createTypings()] });
         return source.getFullText();
     }
@@ -61,8 +63,9 @@ describe('generate interface', function() {
         );
     });
     it('should create types for weird type names', async function() {
-        expect(await createSourceFile('test/fixtures/weird_type_names.yml')).to.be
-            .eq(readFile('./test/fixtures/weird_type_names_result.ts.txt'));
+        expect(await createSourceFile('test/fixtures/weird_type_names.yml')).to.be.eq(
+            readFile('./test/fixtures/weird_type_names_result.ts.txt')
+        );
     });
     it('should create types for kubernetes api', async function() {
         expect(await createSourceFile('test/fixtures/kubernetes_api.yaml')).to.be.eq(

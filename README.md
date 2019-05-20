@@ -30,7 +30,6 @@ USAGE
 # Commands
 <!-- commands -->
 * [`yengen generate [FILE]`](#yengen-generate-file)
-* [`yengen hello [FILE]`](#yengen-hello-file)
 * [`yengen help [COMMAND]`](#yengen-help-command)
 
 ## `yengen generate [FILE]`
@@ -49,26 +48,6 @@ OPTIONS
 
 _See code: [src/commands/generate.ts](https://github.com/WebstormProjects/yengen/blob/v0.0.0/src/commands/generate.ts)_
 
-## `yengen hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ yengen hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ yengen hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/WebstormProjects/yengen/blob/v0.0.0/src/commands/hello.ts)_
-
 ## `yengen help [COMMAND]`
 
 display help for yengen
@@ -86,3 +65,6 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.6/src/commands/help.ts)_
 <!-- commandsstop -->
+
+#TODO:
+Correctly generate oneOf types

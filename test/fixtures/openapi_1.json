@@ -1,26 +1,30 @@
 {
-  "openapi": "3.0.0",
-  "info": {
-    "version": "0.0.1",
-    "title": "Sample application"
-  },
-  "paths": {},
-  "components": {
-    "schemas": {
-      "Product": {
-        "title": "Product",
-        "properties": {
-          "sku": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "prices": {
-            "type": ""
-          }
+    "openapi": "3.0.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "Sample application"
+    },
+    "paths": {},
+    "components": {
+        "schemas": {
+            "Product": {
+                "title": "Product",
+                "type": "object",
+                "properties": {
+                    "sku": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "prices": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
