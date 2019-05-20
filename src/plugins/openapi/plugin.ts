@@ -2,6 +2,7 @@ import { attempt, object, string } from 'joi';
 import { SourceFile } from 'ts-morph';
 import * as tm from 'ts-morph';
 import { CodegenPlugin, Context, PluginResult } from '../../pipeline';
+import { JoiSchemaBuilder } from './joi-schema-builder';
 import { TypeBuilder } from './type-builder';
 import { getOpenAPIConfig } from './openapi';
 import { OpenAPIV3 } from './openapi-types';
@@ -24,11 +25,16 @@ export class OpenapiPlugin implements CodegenPlugin {
         let project = new tm.Project({
             addFilesFromTsConfig: false
         });
-        let source: SourceFile = project.createSourceFile(this.config.typingsFile,'', {overwrite: true});
+        let source: SourceFile = project.createSourceFile(this.config.typingsFile, '', {
+            overwrite: true
+        });
         let config: OpenAPIV3.Document = await getOpenAPIConfig(this.config.openapiFile);
-        let builder = new TypeBuilder(config, new TypeMap(config));
-        let namespaceDeclaration = builder.createTypings();
-        source.set({ statements: [namespaceDeclaration] });
+        let typeMap = new TypeMap(config);
+        let builder = new TypeBuilder(config, typeMap);
+        let joiBuilder = new JoiSchemaBuilder(config, typeMap);
+        let typesNamespace = builder.createTypings();
+        let joiStatements = joiBuilder.createJoiSchemas();
+        source.set({ statements: [typesNamespace,...joiStatements] });
         context.command.log('Emiting source file to ', this.config.typingsFile);
         await project.save();
         return { ok: true };

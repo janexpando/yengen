@@ -13,7 +13,6 @@ import _ = require('lodash');
 import { sanitizeName } from './utils';
 
 export class TypeBuilder {
-
     constructor(private document: OpenAPIV3.Document, private typeMap: TypeMap) {}
 
     private createRootType(
@@ -45,7 +44,7 @@ export class TypeBuilder {
                 });
                 return {
                     kind: StructureKind.Interface,
-                    name,
+                    name: sanitizeName(name),
                     properties,
                     isExported: true
                 };
@@ -104,7 +103,7 @@ export class TypeBuilder {
     private createTypeLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
         return (writer: CodeBlockWriter): void => {
             if (this.typeMap.has(schema)) {
-                writer.write(this.typeMap.get(schema) as string);
+                writer.write(sanitizeName(this.typeMap.get(schema)));
                 return;
             }
             if (isEnum(schema)) {

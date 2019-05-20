@@ -7,12 +7,13 @@ import {
 } from 'ts-morph';
 import { OpenAPIV3 } from './openapi-types';
 import { TypeMap } from './type-map';
+import { sanitizeName } from './utils';
 import _ = require('lodash');
 
 export class JoiSchemaBuilder {
     constructor(private document: OpenAPIV3.Document, private typeMap: TypeMap) {}
 
-    async createJoiSchemas(): Promise<StatementStructures[]> {
+    createJoiSchemas(): StatementStructures[] {
         let result: StatementStructures[] = [];
         _.forOwn(this.document.components!.schemas, (schema: OpenAPIV3.SchemaObject, name) => {
             result.push(this.createJoiSchema(name, schema));
@@ -71,16 +72,19 @@ export class JoiSchemaBuilder {
             isExported: true,
             declarations: [
                 {
-                    name,
+                    name: sanitizeName(name),
                     type: this.getJoiSchemaType(schema),
-                    initializer: this.schemaWriter(schema)
+                    initializer: this.schemaWriter(schema, true)
                 }
             ]
         };
     }
 
-    private schemaWriter(schema: OpenAPIV3.SchemaObject): WriterFunction {
+    private schemaWriter(schema: OpenAPIV3.SchemaObject, skipTypeMap?: boolean): WriterFunction {
         return writer => {
+            if (!skipTypeMap && this.typeMap.has(schema)) {
+                return writer.write(sanitizeName(this.typeMap.get(schema)));
+            }
             switch (schema.type) {
                 case 'array':
                     writer.write('joi.array()');
@@ -95,7 +99,7 @@ export class JoiSchemaBuilder {
                         .write('joi.object(')
                         .inlineBlock(() => {
                             _.forOwn(schema.properties, (schema, name) => {
-                                writer.write(name).write(': ');
+                                writer.write(sanitizeName(name)).write(': ');
                                 this.schemaWriter(schema)(writer);
                                 writer.write(',').newLine();
                             });

@@ -1,5 +1,4 @@
 import { OpenAPIV3 } from './openapi-types';
-import { sanitizeName } from './utils';
 import _ = require('lodash');
 
 export class TypeMap {
@@ -8,7 +7,7 @@ export class TypeMap {
     constructor(private document: OpenAPIV3.Document) {
         if (document.components && document.components.schemas) {
             _.forOwn(document.components.schemas, (schema, typeName) => {
-                this.typeMap.set(schema, sanitizeName(typeName));
+                this.typeMap.set(schema, typeName);
             });
         }
     }
