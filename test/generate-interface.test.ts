@@ -1,7 +1,7 @@
-import { TypeBuilder } from '../src/generators';
+import { TypeBuilder } from '../src/plugins/openapi/generators';
 import { Project } from 'ts-morph';
 import { expect } from 'chai';
-import { getOpenAPIConfig } from '../src/openapi';
+import { getOpenAPIConfig } from '../src/plugins/openapi/openapi';
 let fs = require('fs');
 
 describe('generate interface', function() {
