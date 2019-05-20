@@ -1,0 +1,10 @@
+export namespace ApiSchemas {
+    export interface io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps {
+        $schema: string;
+        additionalItems: {
+            };
+        "x-kubernetes-embedded-resource": boolean;
+        "x-kubernetes-int-or-string": boolean;
+        "x-kubernetes-preserve-unknown-fields": boolean;
+    }
+}

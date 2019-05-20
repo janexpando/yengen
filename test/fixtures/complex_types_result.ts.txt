@@ -1,0 +1,162 @@
+export namespace ApiSchemas {
+    export type MarketplaceName = "amazon_de" | "amazon_uk" | "amazon_it" | "amazon_fr" | "amazon_es" | "amazon_mx" | "amazon_us" | "amazon_ca" | "amazon_br" | "amazon_in" | "amazon_cn" | "amazon_jp" | "amazon_au";
+    export type Continent = "america" | "europe";
+
+    export interface DeveloperConfig {
+        accessKey: string;
+        secretKey: string;
+        developerId: string;
+        continent: Continent;
+    }
+
+    export interface Credentials {
+        marketplaceId: string;
+        developerId: string;
+        sellerId: string;
+        token: string;
+    }
+
+    export interface Company {
+        _id: string;
+    }
+
+    export type FeedType = "GOOGLE_PRODUCT" | "SHOPIFY" | "SHOPTET";
+
+    export interface InputCompany {
+        name: string;
+        feedType: FeedType;
+    }
+
+    export interface ShipmentItem {
+        itemHash: string;
+        itemId: string;
+        quantity: number;
+        sku: string;
+        charges: {
+            };
+        fees: {
+            };
+        costOfPointsGranted: number;
+        costOfPointsReturned: number;
+        withheldTax: number;
+        promotions: number;
+        currency: string;
+    }
+
+    export interface FinancialEvent {
+        companyId: string;
+        shipmentHash: string;
+        marketplaceOrderId: string;
+        marketplace: string;
+        postedDate: string;
+        type: string;
+        items: ShipmentItem[];
+    }
+
+    export interface ListingStatistics {
+        ok: number;
+        error: number;
+    }
+
+    export interface SortParams {
+        sku: 1 | -1;
+        name: 1 | -1;
+        ean: 1 | -1;
+        price: 1 | -1;
+    }
+
+    export interface ProductSync {
+        companyId: string;
+        interval: number;
+        startedOn: string;
+        finishedOn: string;
+        isSyncing: boolean;
+        feedDownloadStartedOn: string;
+        feedDownloadFinishedOn: string;
+        isFeedSyncing: boolean;
+    }
+
+    export type OrderStatus = "Unshipped" | "Pending" | "Shipped" | "Canceled";
+    export type CurrencyCode = "EUR" | "GBP" | "USD" | "CAD";
+
+    export interface Address {
+        name: string;
+        email: string;
+        addressLine: string[];
+        city: string;
+        country: string;
+        district: string;
+        stateOrRegion: string;
+        zipCode: string;
+        countryCode: string;
+        phone: string;
+        taxId: string;
+    }
+
+    export interface OrderItem {
+        sku: string;
+        asin: string;
+        marketplaceItemId: string;
+        name: string;
+        price: number;
+        itemPrice: number;
+        quantity: number;
+        tax: number;
+        promotionDiscount: number;
+        promotionDiscountTax: number;
+        shippingDiscount: number;
+        shippingDiscountTax: number;
+        shippingTax: number;
+        shippingPrice: number;
+    }
+
+    export interface Order {
+        companyId: string;
+        marketplaceOrderId: string;
+        status: OrderStatus;
+        marketplace: MarketplaceName;
+        fulfillmentChannel: string;
+        totalPrice: number;
+        currencyCode: CurrencyCode;
+        shipServiceLevel: string;
+        paymentMethod: string;
+        invoiceUrls: string[];
+        buyer: Address;
+        items: OrderItem[];
+        lastChanged: string;
+        purchaseDate: string;
+        isPremiumOrder: boolean;
+        isPrime: boolean;
+        isBusinessOrder: boolean;
+        isComplete: boolean;
+    }
+
+    export interface Settings {
+        companyId: string;
+        synchronizePrices: boolean;
+        synchronizeStock: boolean;
+        listNewProducts: boolean;
+        formulas: FormulaMap;
+    }
+
+    export interface FormulaMap {
+        amazon_de: Formula;
+        amazon_uk: Formula;
+        amazon_it: Formula;
+        amazon_fr: Formula;
+        amazon_es: Formula;
+        amazon_mx: Formula;
+        amazon_us: Formula;
+        amazon_ca: Formula;
+        amazon_br: Formula;
+        amazon_in: Formula;
+        amazon_cn: Formula;
+        amazon_jp: Formula;
+        amazon_au: Formula;
+    }
+
+    export interface Formula {
+        add: number;
+        multiply: number;
+    }
+}
