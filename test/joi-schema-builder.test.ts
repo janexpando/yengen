@@ -4,6 +4,7 @@ import { Project } from 'ts-morph';
 import { JoiSchemaBuilder } from '../src/plugins/openapi/joi-schema-builder';
 import { getOpenAPIConfig } from '../src/plugins/openapi/openapi';
 import { TypeMap } from '../src/plugins/openapi/type-map';
+import { readFile } from './utils';
 
 describe('JoiSchemaBuilder', function() {
     async function createSourceFile(file: string): Promise<string> {
@@ -11,21 +12,23 @@ describe('JoiSchemaBuilder', function() {
         let source = project.createSourceFile('generated.ts');
         let config = await getOpenAPIConfig(file);
         let typeBuilder = new JoiSchemaBuilder(config, new TypeMap(config));
-        source.set({ statements: await typeBuilder.createJoiSchemas() });
+        let statements = await typeBuilder.createJoiSchemas();
+        source.set({ statements });
         return source.getFullText();
     }
     it('should create simple schema', async function() {
         expect(await createSourceFile('./test/fixtures/openapi_1.json')).to.be.eq(
-            `import * as joi from "joi";\n\nexport namespace JoiSchemas {\n    export let Product: joi.ObjectSchema = joi.object({\n            sku: joi.string(),\n            name: joi.string(),\n            prices: joi.array().items(joi.string()),\n        });\n}\n`
+            `import { ObjectSchema, ArraySchema, AnySchema, BooleanSchema, BinarySchema, DateSchema, NumberSchema, StringSchema, lazy, array, object, boolean, number, string, any } from "joi";\n\nexport namespace JoiSchemas {\n    export let Product: ObjectSchema = object({\n            sku: string(),\n            name: string(),\n            prices: array().items(string()),\n        });\n}\n`
         );
     });
     it('should create schema with references', async function() {
         expect(await createSourceFile('./test/fixtures/deep_literals.yml')).to.be.eq(
-            `import * as joi from "joi";\n\nexport namespace JoiSchemas {\n    export let Order: joi.ObjectSchema = joi.object({\n            id: joi.string(),\n            product: Product,\n        });\n    export let Product: joi.ObjectSchema = joi.object({\n            sku: joi.string(),\n            name: joi.string(),\n            prices: joi.array().items(joi.object({\n                marketplace: joi.string(),\n                price: joi.number(),\n            })),\n        });\n}\n`
+            `import { ObjectSchema, ArraySchema, AnySchema, BooleanSchema, BinarySchema, DateSchema, NumberSchema, StringSchema, lazy, array, object, boolean, number, string, any } from "joi";\n\nexport namespace JoiSchemas {\n    export let Order: ObjectSchema = object({\n            id: string(),\n            product: lazy(()=>Product),\n        });\n    export let Product: ObjectSchema = object({\n            sku: string(),\n            name: string(),\n            prices: array().items(object({\n                marketplace: string(),\n                price: number(),\n            })),\n        });\n}\n`
         );
     });
-    it.skip('should generate joi schemas for kubernetes api', async function() {
-        expect(await createSourceFile('test/fixtures/kubernetes_api.yaml')).to.be.eq('');
-        //TODO: solve problem with circular code
+    it('should generate joi schemas for kubernetes api', async function() {
+        expect(await createSourceFile('test/fixtures/kubernetes_api.yaml')).to.be.eq(
+            readFile('test/fixtures/kubernetes_api_joi_result.ts.txt')
+        );
     });
 });

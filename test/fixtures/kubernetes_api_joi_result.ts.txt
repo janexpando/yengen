@@ -1,0 +1,3248 @@
+import { ObjectSchema, ArraySchema, AnySchema, BooleanSchema, BinarySchema, DateSchema, NumberSchema, StringSchema, lazy, array, object, boolean, number, string, any } from "joi";
+
+export namespace JoiSchemas {
+    export let io_k8s_api_admissionregistration_v1beta1_MutatingWebhookConfiguration: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            webhooks: array().items(lazy(()=>io_k8s_api_admissionregistration_v1beta1_Webhook)),
+        });
+    export let io_k8s_api_admissionregistration_v1beta1_MutatingWebhookConfigurationList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_admissionregistration_v1beta1_MutatingWebhookConfiguration)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_admissionregistration_v1beta1_RuleWithOperations: ObjectSchema = object({
+            apiGroups: array().items(string()),
+            apiVersions: array().items(string()),
+            operations: array().items(string()),
+            resources: array().items(string()),
+            scope: string(),
+        });
+    export let io_k8s_api_admissionregistration_v1beta1_ServiceReference: ObjectSchema = object({
+            name: string(),
+            namespace: string(),
+            path: string(),
+            port: number().integer(),
+        });
+    export let io_k8s_api_admissionregistration_v1beta1_ValidatingWebhookConfiguration: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            webhooks: array().items(lazy(()=>io_k8s_api_admissionregistration_v1beta1_Webhook)),
+        });
+    export let io_k8s_api_admissionregistration_v1beta1_ValidatingWebhookConfigurationList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_admissionregistration_v1beta1_ValidatingWebhookConfiguration)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_admissionregistration_v1beta1_Webhook: ObjectSchema = object({
+            admissionReviewVersions: array().items(string()),
+            clientConfig: lazy(()=>io_k8s_api_admissionregistration_v1beta1_WebhookClientConfig),
+            failurePolicy: string(),
+            name: string(),
+            namespaceSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            rules: array().items(lazy(()=>io_k8s_api_admissionregistration_v1beta1_RuleWithOperations)),
+            sideEffects: string(),
+            timeoutSeconds: number().integer(),
+        });
+    export let io_k8s_api_admissionregistration_v1beta1_WebhookClientConfig: ObjectSchema = object({
+            caBundle: string(),
+            service: lazy(()=>io_k8s_api_admissionregistration_v1beta1_ServiceReference),
+            url: string(),
+        });
+    export let io_k8s_api_apps_v1_ControllerRevision: ObjectSchema = object({
+            apiVersion: string(),
+            data: lazy(()=>io_k8s_apimachinery_pkg_runtime_RawExtension),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            revision: number().integer(),
+        });
+    export let io_k8s_api_apps_v1_ControllerRevisionList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1_ControllerRevision)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1_DaemonSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_DaemonSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_DaemonSetStatus),
+        });
+    export let io_k8s_api_apps_v1_DaemonSetCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1_DaemonSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1_DaemonSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1_DaemonSetSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            revisionHistoryLimit: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+            updateStrategy: lazy(()=>io_k8s_api_apps_v1_DaemonSetUpdateStrategy),
+        });
+    export let io_k8s_api_apps_v1_DaemonSetStatus: ObjectSchema = object({
+            collisionCount: number().integer(),
+            conditions: array().items(lazy(()=>io_k8s_api_apps_v1_DaemonSetCondition)),
+            currentNumberScheduled: number().integer(),
+            desiredNumberScheduled: number().integer(),
+            numberAvailable: number().integer(),
+            numberMisscheduled: number().integer(),
+            numberReady: number().integer(),
+            numberUnavailable: number().integer(),
+            observedGeneration: number().integer(),
+            updatedNumberScheduled: number().integer(),
+        });
+    export let io_k8s_api_apps_v1_DaemonSetUpdateStrategy: ObjectSchema = object({
+            rollingUpdate: lazy(()=>io_k8s_api_apps_v1_RollingUpdateDaemonSet),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1_Deployment: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_DeploymentSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_DeploymentStatus),
+        });
+    export let io_k8s_api_apps_v1_DeploymentCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            lastUpdateTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1_DeploymentList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1_Deployment)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1_DeploymentSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            paused: boolean(),
+            progressDeadlineSeconds: number().integer(),
+            replicas: number().integer(),
+            revisionHistoryLimit: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            strategy: lazy(()=>io_k8s_api_apps_v1_DeploymentStrategy),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+        });
+    export let io_k8s_api_apps_v1_DeploymentStatus: ObjectSchema = object({
+            availableReplicas: number().integer(),
+            collisionCount: number().integer(),
+            conditions: array().items(lazy(()=>io_k8s_api_apps_v1_DeploymentCondition)),
+            observedGeneration: number().integer(),
+            readyReplicas: number().integer(),
+            replicas: number().integer(),
+            unavailableReplicas: number().integer(),
+            updatedReplicas: number().integer(),
+        });
+    export let io_k8s_api_apps_v1_DeploymentStrategy: ObjectSchema = object({
+            rollingUpdate: lazy(()=>io_k8s_api_apps_v1_RollingUpdateDeployment),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1_ReplicaSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_ReplicaSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_ReplicaSetStatus),
+        });
+    export let io_k8s_api_apps_v1_ReplicaSetCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1_ReplicaSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1_ReplicaSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1_ReplicaSetSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            replicas: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+        });
+    export let io_k8s_api_apps_v1_ReplicaSetStatus: ObjectSchema = object({
+            availableReplicas: number().integer(),
+            conditions: array().items(lazy(()=>io_k8s_api_apps_v1_ReplicaSetCondition)),
+            fullyLabeledReplicas: number().integer(),
+            observedGeneration: number().integer(),
+            readyReplicas: number().integer(),
+            replicas: number().integer(),
+        });
+    export let io_k8s_api_apps_v1_RollingUpdateDaemonSet: ObjectSchema = object({
+            maxUnavailable: string(),
+        });
+    export let io_k8s_api_apps_v1_RollingUpdateDeployment: ObjectSchema = object({
+            maxSurge: string(),
+            maxUnavailable: string(),
+        });
+    export let io_k8s_api_apps_v1_RollingUpdateStatefulSetStrategy: ObjectSchema = object({
+            partition: number().integer(),
+        });
+    export let io_k8s_api_apps_v1_StatefulSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_StatefulSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_StatefulSetStatus),
+        });
+    export let io_k8s_api_apps_v1_StatefulSetCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1_StatefulSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1_StatefulSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1_StatefulSetSpec: ObjectSchema = object({
+            podManagementPolicy: string(),
+            replicas: number().integer(),
+            revisionHistoryLimit: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            serviceName: string(),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+            updateStrategy: lazy(()=>io_k8s_api_apps_v1_StatefulSetUpdateStrategy),
+            volumeClaimTemplates: array().items(lazy(()=>io_k8s_api_core_v1_PersistentVolumeClaim)),
+        });
+    export let io_k8s_api_apps_v1_StatefulSetStatus: ObjectSchema = object({
+            collisionCount: number().integer(),
+            conditions: array().items(lazy(()=>io_k8s_api_apps_v1_StatefulSetCondition)),
+            currentReplicas: number().integer(),
+            currentRevision: string(),
+            observedGeneration: number().integer(),
+            readyReplicas: number().integer(),
+            replicas: number().integer(),
+            updateRevision: string(),
+            updatedReplicas: number().integer(),
+        });
+    export let io_k8s_api_apps_v1_StatefulSetUpdateStrategy: ObjectSchema = object({
+            rollingUpdate: lazy(()=>io_k8s_api_apps_v1_RollingUpdateStatefulSetStrategy),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1beta1_ControllerRevision: ObjectSchema = object({
+            apiVersion: string(),
+            data: lazy(()=>io_k8s_apimachinery_pkg_runtime_RawExtension),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            revision: number().integer(),
+        });
+    export let io_k8s_api_apps_v1beta1_ControllerRevisionList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta1_ControllerRevision)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1beta1_Deployment: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1beta1_DeploymentSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_DeploymentStatus),
+        });
+    export let io_k8s_api_apps_v1beta1_DeploymentList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta1_Deployment)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1beta1_DeploymentRollback: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            name: string(),
+            rollbackTo: lazy(()=>io_k8s_api_apps_v1beta1_RollbackConfig),
+            updatedAnnotations: object({
+            }),
+        });
+    export let io_k8s_api_apps_v1beta1_DeploymentSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            paused: boolean(),
+            progressDeadlineSeconds: number().integer(),
+            replicas: number().integer(),
+            revisionHistoryLimit: number().integer(),
+            rollbackTo: lazy(()=>io_k8s_api_apps_v1beta1_RollbackConfig),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            strategy: lazy(()=>io_k8s_api_apps_v1_DeploymentStrategy),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+        });
+    export let io_k8s_api_apps_v1beta1_RollbackConfig: ObjectSchema = object({
+            revision: number().integer(),
+        });
+    export let io_k8s_api_apps_v1beta1_RollingUpdateStatefulSetStrategy: ObjectSchema = object({
+            partition: number().integer(),
+        });
+    export let io_k8s_api_apps_v1beta1_Scale: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1beta1_ScaleSpec),
+            status: lazy(()=>io_k8s_api_apps_v1beta1_ScaleStatus),
+        });
+    export let io_k8s_api_apps_v1beta1_ScaleSpec: ObjectSchema = object({
+            replicas: number().integer(),
+        });
+    export let io_k8s_api_apps_v1beta1_ScaleStatus: ObjectSchema = object({
+            replicas: number().integer(),
+            selector: object({
+            }),
+            targetSelector: string(),
+        });
+    export let io_k8s_api_apps_v1beta1_StatefulSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1beta1_StatefulSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_StatefulSetStatus),
+        });
+    export let io_k8s_api_apps_v1beta1_StatefulSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta1_StatefulSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1beta1_StatefulSetSpec: ObjectSchema = object({
+            podManagementPolicy: string(),
+            replicas: number().integer(),
+            revisionHistoryLimit: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            serviceName: string(),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+            updateStrategy: lazy(()=>io_k8s_api_apps_v1beta1_StatefulSetUpdateStrategy),
+            volumeClaimTemplates: array().items(lazy(()=>io_k8s_api_core_v1_PersistentVolumeClaim)),
+        });
+    export let io_k8s_api_apps_v1beta1_StatefulSetUpdateStrategy: ObjectSchema = object({
+            rollingUpdate: lazy(()=>io_k8s_api_apps_v1beta1_RollingUpdateStatefulSetStrategy),
+            type: string(),
+        });
+    export let io_k8s_api_apps_v1beta2_ControllerRevision: ObjectSchema = object({
+            apiVersion: string(),
+            data: lazy(()=>io_k8s_apimachinery_pkg_runtime_RawExtension),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            revision: number().integer(),
+        });
+    export let io_k8s_api_apps_v1beta2_ControllerRevisionList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta2_ControllerRevision)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1beta2_DaemonSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_DaemonSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_DaemonSetStatus),
+        });
+    export let io_k8s_api_apps_v1beta2_DaemonSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta2_DaemonSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1beta2_Deployment: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_DeploymentSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_DeploymentStatus),
+        });
+    export let io_k8s_api_apps_v1beta2_DeploymentList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta2_Deployment)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1beta2_ReplicaSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_ReplicaSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_ReplicaSetStatus),
+        });
+    export let io_k8s_api_apps_v1beta2_ReplicaSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta2_ReplicaSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_apps_v1beta2_StatefulSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_apps_v1_StatefulSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_StatefulSetStatus),
+        });
+    export let io_k8s_api_apps_v1beta2_StatefulSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_apps_v1beta2_StatefulSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_auditregistration_v1alpha1_AuditSink: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_auditregistration_v1alpha1_AuditSinkSpec),
+        });
+    export let io_k8s_api_auditregistration_v1alpha1_AuditSinkList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_auditregistration_v1alpha1_AuditSink)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_auditregistration_v1alpha1_AuditSinkSpec: ObjectSchema = object({
+            policy: lazy(()=>io_k8s_api_auditregistration_v1alpha1_Policy),
+            webhook: lazy(()=>io_k8s_api_auditregistration_v1alpha1_Webhook),
+        });
+    export let io_k8s_api_auditregistration_v1alpha1_Policy: ObjectSchema = object({
+            level: string(),
+            stages: array().items(string()),
+        });
+    export let io_k8s_api_auditregistration_v1alpha1_Webhook: ObjectSchema = object({
+            clientConfig: lazy(()=>io_k8s_api_auditregistration_v1alpha1_WebhookClientConfig),
+            throttle: lazy(()=>io_k8s_api_auditregistration_v1alpha1_WebhookThrottleConfig),
+        });
+    export let io_k8s_api_auditregistration_v1alpha1_WebhookClientConfig: ObjectSchema = object({
+            caBundle: string(),
+            service: lazy(()=>io_k8s_api_admissionregistration_v1beta1_ServiceReference),
+            url: string(),
+        });
+    export let io_k8s_api_auditregistration_v1alpha1_WebhookThrottleConfig: ObjectSchema = object({
+            burst: number().integer(),
+            qps: number().integer(),
+        });
+    export let io_k8s_api_authentication_v1_TokenReview: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_authentication_v1_TokenReviewSpec),
+            status: lazy(()=>io_k8s_api_authentication_v1_TokenReviewStatus),
+        });
+    export let io_k8s_api_authentication_v1_TokenReviewSpec: ObjectSchema = object({
+            audiences: array().items(string()),
+            token: string(),
+        });
+    export let io_k8s_api_authentication_v1_TokenReviewStatus: ObjectSchema = object({
+            audiences: array().items(string()),
+            authenticated: boolean(),
+            error: string(),
+            user: lazy(()=>io_k8s_api_authentication_v1_UserInfo),
+        });
+    export let io_k8s_api_authentication_v1_UserInfo: ObjectSchema = object({
+            extra: object({
+            }),
+            groups: array().items(string()),
+            uid: string(),
+            username: string(),
+        });
+    export let io_k8s_api_authorization_v1_LocalSubjectAccessReview: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_authorization_v1_SubjectAccessReviewSpec),
+            status: lazy(()=>io_k8s_api_authorization_v1_SubjectAccessReviewStatus),
+        });
+    export let io_k8s_api_authorization_v1_NonResourceAttributes: ObjectSchema = object({
+            path: string(),
+            verb: string(),
+        });
+    export let io_k8s_api_authorization_v1_NonResourceRule: ObjectSchema = object({
+            nonResourceURLs: array().items(string()),
+            verbs: array().items(string()),
+        });
+    export let io_k8s_api_authorization_v1_ResourceAttributes: ObjectSchema = object({
+            group: string(),
+            name: string(),
+            namespace: string(),
+            resource: string(),
+            subresource: string(),
+            verb: string(),
+            version: string(),
+        });
+    export let io_k8s_api_authorization_v1_ResourceRule: ObjectSchema = object({
+            apiGroups: array().items(string()),
+            resourceNames: array().items(string()),
+            resources: array().items(string()),
+            verbs: array().items(string()),
+        });
+    export let io_k8s_api_authorization_v1_SelfSubjectAccessReview: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_authorization_v1_SelfSubjectAccessReviewSpec),
+            status: lazy(()=>io_k8s_api_authorization_v1_SubjectAccessReviewStatus),
+        });
+    export let io_k8s_api_authorization_v1_SelfSubjectAccessReviewSpec: ObjectSchema = object({
+            nonResourceAttributes: lazy(()=>io_k8s_api_authorization_v1_NonResourceAttributes),
+            resourceAttributes: lazy(()=>io_k8s_api_authorization_v1_ResourceAttributes),
+        });
+    export let io_k8s_api_authorization_v1_SelfSubjectRulesReview: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_authorization_v1_SelfSubjectRulesReviewSpec),
+            status: lazy(()=>io_k8s_api_authorization_v1_SubjectRulesReviewStatus),
+        });
+    export let io_k8s_api_authorization_v1_SelfSubjectRulesReviewSpec: ObjectSchema = object({
+            namespace: string(),
+        });
+    export let io_k8s_api_authorization_v1_SubjectAccessReview: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_authorization_v1_SubjectAccessReviewSpec),
+            status: lazy(()=>io_k8s_api_authorization_v1_SubjectAccessReviewStatus),
+        });
+    export let io_k8s_api_authorization_v1_SubjectAccessReviewSpec: ObjectSchema = object({
+            extra: object({
+            }),
+            groups: array().items(string()),
+            nonResourceAttributes: lazy(()=>io_k8s_api_authorization_v1_NonResourceAttributes),
+            resourceAttributes: lazy(()=>io_k8s_api_authorization_v1_ResourceAttributes),
+            uid: string(),
+            user: string(),
+        });
+    export let io_k8s_api_authorization_v1_SubjectAccessReviewStatus: ObjectSchema = object({
+            allowed: boolean(),
+            denied: boolean(),
+            evaluationError: string(),
+            reason: string(),
+        });
+    export let io_k8s_api_authorization_v1_SubjectRulesReviewStatus: ObjectSchema = object({
+            evaluationError: string(),
+            incomplete: boolean(),
+            nonResourceRules: array().items(lazy(()=>io_k8s_api_authorization_v1_NonResourceRule)),
+            resourceRules: array().items(lazy(()=>io_k8s_api_authorization_v1_ResourceRule)),
+        });
+    export let io_k8s_api_authorization_v1beta1_LocalSubjectAccessReview: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_authorization_v1beta1_SubjectAccessReviewSpec),
+            status: lazy(()=>io_k8s_api_authorization_v1_SubjectAccessReviewStatus),
+        });
+    export let io_k8s_api_authorization_v1beta1_SubjectAccessReview: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_authorization_v1beta1_SubjectAccessReviewSpec),
+            status: lazy(()=>io_k8s_api_authorization_v1_SubjectAccessReviewStatus),
+        });
+    export let io_k8s_api_authorization_v1beta1_SubjectAccessReviewSpec: ObjectSchema = object({
+            extra: object({
+            }),
+            group: array().items(string()),
+            nonResourceAttributes: lazy(()=>io_k8s_api_authorization_v1_NonResourceAttributes),
+            resourceAttributes: lazy(()=>io_k8s_api_authorization_v1_ResourceAttributes),
+            uid: string(),
+            user: string(),
+        });
+    export let io_k8s_api_autoscaling_v1_CrossVersionObjectReference: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            name: string(),
+        });
+    export let io_k8s_api_autoscaling_v1_HorizontalPodAutoscaler: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_autoscaling_v1_HorizontalPodAutoscalerSpec),
+            status: lazy(()=>io_k8s_api_autoscaling_v1_HorizontalPodAutoscalerStatus),
+        });
+    export let io_k8s_api_autoscaling_v1_HorizontalPodAutoscalerList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_autoscaling_v1_HorizontalPodAutoscaler)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_autoscaling_v1_HorizontalPodAutoscalerSpec: ObjectSchema = object({
+            maxReplicas: number().integer(),
+            minReplicas: number().integer(),
+            scaleTargetRef: lazy(()=>io_k8s_api_autoscaling_v1_CrossVersionObjectReference),
+            targetCPUUtilizationPercentage: number().integer(),
+        });
+    export let io_k8s_api_autoscaling_v1_HorizontalPodAutoscalerStatus: ObjectSchema = object({
+            currentCPUUtilizationPercentage: number().integer(),
+            currentReplicas: number().integer(),
+            desiredReplicas: number().integer(),
+            lastScaleTime: string(),
+            observedGeneration: number().integer(),
+        });
+    export let io_k8s_api_autoscaling_v1_Scale: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_autoscaling_v1_ScaleSpec),
+            status: lazy(()=>io_k8s_api_autoscaling_v1_ScaleStatus),
+        });
+    export let io_k8s_api_autoscaling_v1_ScaleSpec: ObjectSchema = object({
+            replicas: number().integer(),
+        });
+    export let io_k8s_api_autoscaling_v1_ScaleStatus: ObjectSchema = object({
+            replicas: number().integer(),
+            selector: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_ExternalMetricSource: ObjectSchema = object({
+            metricName: string(),
+            metricSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            targetAverageValue: string(),
+            targetValue: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_ExternalMetricStatus: ObjectSchema = object({
+            currentAverageValue: string(),
+            currentValue: string(),
+            metricName: string(),
+            metricSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscaler: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerSpec),
+            status: lazy(()=>io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerStatus),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscaler)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerSpec: ObjectSchema = object({
+            maxReplicas: number().integer(),
+            metrics: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta1_MetricSpec)),
+            minReplicas: number().integer(),
+            scaleTargetRef: lazy(()=>io_k8s_api_autoscaling_v1_CrossVersionObjectReference),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerStatus: ObjectSchema = object({
+            conditions: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerCondition)),
+            currentMetrics: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta1_MetricStatus)),
+            currentReplicas: number().integer(),
+            desiredReplicas: number().integer(),
+            lastScaleTime: string(),
+            observedGeneration: number().integer(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_MetricSpec: ObjectSchema = object({
+            external: lazy(()=>io_k8s_api_autoscaling_v2beta1_ExternalMetricSource),
+            object: lazy(()=>io_k8s_api_autoscaling_v2beta1_ObjectMetricSource),
+            pods: lazy(()=>io_k8s_api_autoscaling_v2beta1_PodsMetricSource),
+            resource: lazy(()=>io_k8s_api_autoscaling_v2beta1_ResourceMetricSource),
+            type: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_MetricStatus: ObjectSchema = object({
+            external: lazy(()=>io_k8s_api_autoscaling_v2beta1_ExternalMetricStatus),
+            object: lazy(()=>io_k8s_api_autoscaling_v2beta1_ObjectMetricStatus),
+            pods: lazy(()=>io_k8s_api_autoscaling_v2beta1_PodsMetricStatus),
+            resource: lazy(()=>io_k8s_api_autoscaling_v2beta1_ResourceMetricStatus),
+            type: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_ObjectMetricSource: ObjectSchema = object({
+            averageValue: string(),
+            metricName: string(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            target: lazy(()=>io_k8s_api_autoscaling_v1_CrossVersionObjectReference),
+            targetValue: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_ObjectMetricStatus: ObjectSchema = object({
+            averageValue: string(),
+            currentValue: string(),
+            metricName: string(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            target: lazy(()=>io_k8s_api_autoscaling_v1_CrossVersionObjectReference),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_PodsMetricSource: ObjectSchema = object({
+            metricName: string(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            targetAverageValue: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_PodsMetricStatus: ObjectSchema = object({
+            currentAverageValue: string(),
+            metricName: string(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_ResourceMetricSource: ObjectSchema = object({
+            name: string(),
+            targetAverageUtilization: number().integer(),
+            targetAverageValue: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta1_ResourceMetricStatus: ObjectSchema = object({
+            currentAverageUtilization: number().integer(),
+            currentAverageValue: string(),
+            name: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_ExternalMetricSource: ObjectSchema = object({
+            metric: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricIdentifier),
+            target: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricTarget),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_ExternalMetricStatus: ObjectSchema = object({
+            current: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricValueStatus),
+            metric: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricIdentifier),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_HorizontalPodAutoscaler: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_autoscaling_v2beta2_HorizontalPodAutoscalerSpec),
+            status: lazy(()=>io_k8s_api_autoscaling_v2beta2_HorizontalPodAutoscalerStatus),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_HorizontalPodAutoscalerList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta2_HorizontalPodAutoscaler)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_HorizontalPodAutoscalerSpec: ObjectSchema = object({
+            maxReplicas: number().integer(),
+            metrics: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricSpec)),
+            minReplicas: number().integer(),
+            scaleTargetRef: lazy(()=>io_k8s_api_autoscaling_v1_CrossVersionObjectReference),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_HorizontalPodAutoscalerStatus: ObjectSchema = object({
+            conditions: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta1_HorizontalPodAutoscalerCondition)),
+            currentMetrics: array().items(lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricStatus)),
+            currentReplicas: number().integer(),
+            desiredReplicas: number().integer(),
+            lastScaleTime: string(),
+            observedGeneration: number().integer(),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_MetricIdentifier: ObjectSchema = object({
+            name: string(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_MetricSpec: ObjectSchema = object({
+            external: lazy(()=>io_k8s_api_autoscaling_v2beta2_ExternalMetricSource),
+            object: lazy(()=>io_k8s_api_autoscaling_v2beta2_ObjectMetricSource),
+            pods: lazy(()=>io_k8s_api_autoscaling_v2beta2_PodsMetricSource),
+            resource: lazy(()=>io_k8s_api_autoscaling_v2beta2_ResourceMetricSource),
+            type: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_MetricStatus: ObjectSchema = object({
+            external: lazy(()=>io_k8s_api_autoscaling_v2beta2_ExternalMetricStatus),
+            object: lazy(()=>io_k8s_api_autoscaling_v2beta2_ObjectMetricStatus),
+            pods: lazy(()=>io_k8s_api_autoscaling_v2beta2_PodsMetricStatus),
+            resource: lazy(()=>io_k8s_api_autoscaling_v2beta2_ResourceMetricStatus),
+            type: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_MetricTarget: ObjectSchema = object({
+            averageUtilization: number().integer(),
+            averageValue: string(),
+            type: string(),
+            value: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_MetricValueStatus: ObjectSchema = object({
+            averageUtilization: number().integer(),
+            averageValue: string(),
+            value: string(),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_ObjectMetricSource: ObjectSchema = object({
+            describedObject: lazy(()=>io_k8s_api_autoscaling_v1_CrossVersionObjectReference),
+            metric: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricIdentifier),
+            target: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricTarget),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_ObjectMetricStatus: ObjectSchema = object({
+            current: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricValueStatus),
+            describedObject: lazy(()=>io_k8s_api_autoscaling_v1_CrossVersionObjectReference),
+            metric: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricIdentifier),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_PodsMetricSource: ObjectSchema = object({
+            metric: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricIdentifier),
+            target: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricTarget),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_PodsMetricStatus: ObjectSchema = object({
+            current: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricValueStatus),
+            metric: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricIdentifier),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_ResourceMetricSource: ObjectSchema = object({
+            name: string(),
+            target: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricTarget),
+        });
+    export let io_k8s_api_autoscaling_v2beta2_ResourceMetricStatus: ObjectSchema = object({
+            current: lazy(()=>io_k8s_api_autoscaling_v2beta2_MetricValueStatus),
+            name: string(),
+        });
+    export let io_k8s_api_batch_v1_Job: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_batch_v1_JobSpec),
+            status: lazy(()=>io_k8s_api_batch_v1_JobStatus),
+        });
+    export let io_k8s_api_batch_v1_JobCondition: ObjectSchema = object({
+            lastProbeTime: string(),
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_batch_v1_JobList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_batch_v1_Job)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_batch_v1_JobSpec: ObjectSchema = object({
+            activeDeadlineSeconds: number().integer(),
+            backoffLimit: number().integer(),
+            completions: number().integer(),
+            manualSelector: boolean(),
+            parallelism: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+            ttlSecondsAfterFinished: number().integer(),
+        });
+    export let io_k8s_api_batch_v1_JobStatus: ObjectSchema = object({
+            active: number().integer(),
+            completionTime: string(),
+            conditions: array().items(lazy(()=>io_k8s_api_batch_v1_JobCondition)),
+            failed: number().integer(),
+            startTime: string(),
+            succeeded: number().integer(),
+        });
+    export let io_k8s_api_batch_v1beta1_CronJob: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_batch_v1beta1_CronJobSpec),
+            status: lazy(()=>io_k8s_api_batch_v1beta1_CronJobStatus),
+        });
+    export let io_k8s_api_batch_v1beta1_CronJobList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_batch_v1beta1_CronJob)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_batch_v1beta1_CronJobSpec: ObjectSchema = object({
+            concurrencyPolicy: string(),
+            failedJobsHistoryLimit: number().integer(),
+            jobTemplate: lazy(()=>io_k8s_api_batch_v1beta1_JobTemplateSpec),
+            schedule: string(),
+            startingDeadlineSeconds: number().integer(),
+            successfulJobsHistoryLimit: number().integer(),
+            suspend: boolean(),
+        });
+    export let io_k8s_api_batch_v1beta1_CronJobStatus: ObjectSchema = object({
+            active: array().items(lazy(()=>io_k8s_api_core_v1_ObjectReference)),
+            lastScheduleTime: string(),
+        });
+    export let io_k8s_api_batch_v1beta1_JobTemplateSpec: ObjectSchema = object({
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_batch_v1_JobSpec),
+        });
+    export let io_k8s_api_batch_v2alpha1_CronJob: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_batch_v2alpha1_CronJobSpec),
+            status: lazy(()=>io_k8s_api_batch_v1beta1_CronJobStatus),
+        });
+    export let io_k8s_api_batch_v2alpha1_CronJobList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_batch_v2alpha1_CronJob)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_batch_v2alpha1_CronJobSpec: ObjectSchema = object({
+            concurrencyPolicy: string(),
+            failedJobsHistoryLimit: number().integer(),
+            jobTemplate: lazy(()=>io_k8s_api_batch_v1beta1_JobTemplateSpec),
+            schedule: string(),
+            startingDeadlineSeconds: number().integer(),
+            successfulJobsHistoryLimit: number().integer(),
+            suspend: boolean(),
+        });
+    export let io_k8s_api_certificates_v1beta1_CertificateSigningRequest: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_certificates_v1beta1_CertificateSigningRequestSpec),
+            status: lazy(()=>io_k8s_api_certificates_v1beta1_CertificateSigningRequestStatus),
+        });
+    export let io_k8s_api_certificates_v1beta1_CertificateSigningRequestCondition: ObjectSchema = object({
+            lastUpdateTime: string(),
+            message: string(),
+            reason: string(),
+            type: string(),
+        });
+    export let io_k8s_api_certificates_v1beta1_CertificateSigningRequestList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_certificates_v1beta1_CertificateSigningRequest)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_certificates_v1beta1_CertificateSigningRequestSpec: ObjectSchema = object({
+            extra: object({
+            }),
+            groups: array().items(string()),
+            request: string(),
+            uid: string(),
+            usages: array().items(string()),
+            username: string(),
+        });
+    export let io_k8s_api_certificates_v1beta1_CertificateSigningRequestStatus: ObjectSchema = object({
+            certificate: string(),
+            conditions: array().items(lazy(()=>io_k8s_api_certificates_v1beta1_CertificateSigningRequestCondition)),
+        });
+    export let io_k8s_api_coordination_v1_Lease: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_coordination_v1_LeaseSpec),
+        });
+    export let io_k8s_api_coordination_v1_LeaseList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_coordination_v1_Lease)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_coordination_v1_LeaseSpec: ObjectSchema = object({
+            acquireTime: string(),
+            holderIdentity: string(),
+            leaseDurationSeconds: number().integer(),
+            leaseTransitions: number().integer(),
+            renewTime: string(),
+        });
+    export let io_k8s_api_core_v1_AWSElasticBlockStoreVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            partition: number().integer(),
+            readOnly: boolean(),
+            volumeID: string(),
+        });
+    export let io_k8s_api_core_v1_Affinity: ObjectSchema = object({
+            nodeAffinity: lazy(()=>io_k8s_api_core_v1_NodeAffinity),
+            podAffinity: lazy(()=>io_k8s_api_core_v1_PodAffinity),
+            podAntiAffinity: lazy(()=>io_k8s_api_core_v1_PodAntiAffinity),
+        });
+    export let io_k8s_api_core_v1_AttachedVolume: ObjectSchema = object({
+            devicePath: string(),
+            name: string(),
+        });
+    export let io_k8s_api_core_v1_AzureDiskVolumeSource: ObjectSchema = object({
+            cachingMode: string(),
+            diskName: string(),
+            diskURI: string(),
+            fsType: string(),
+            kind: string(),
+            readOnly: boolean(),
+        });
+    export let io_k8s_api_core_v1_AzureFilePersistentVolumeSource: ObjectSchema = object({
+            readOnly: boolean(),
+            secretName: string(),
+            secretNamespace: string(),
+            shareName: string(),
+        });
+    export let io_k8s_api_core_v1_AzureFileVolumeSource: ObjectSchema = object({
+            readOnly: boolean(),
+            secretName: string(),
+            shareName: string(),
+        });
+    export let io_k8s_api_core_v1_Binding: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            target: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+        });
+    export let io_k8s_api_core_v1_CSIPersistentVolumeSource: ObjectSchema = object({
+            controllerExpandSecretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            controllerPublishSecretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            driver: string(),
+            fsType: string(),
+            nodePublishSecretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            nodeStageSecretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            readOnly: boolean(),
+            volumeAttributes: object({
+            }),
+            volumeHandle: string(),
+        });
+    export let io_k8s_api_core_v1_CSIVolumeSource: ObjectSchema = object({
+            driver: string(),
+            fsType: string(),
+            nodePublishSecretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+            readOnly: boolean(),
+            volumeAttributes: object({
+            }),
+        });
+    export let io_k8s_api_core_v1_Capabilities: ObjectSchema = object({
+            add: array().items(string()),
+            drop: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_CephFSPersistentVolumeSource: ObjectSchema = object({
+            monitors: array().items(string()),
+            path: string(),
+            readOnly: boolean(),
+            secretFile: string(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            user: string(),
+        });
+    export let io_k8s_api_core_v1_CephFSVolumeSource: ObjectSchema = object({
+            monitors: array().items(string()),
+            path: string(),
+            readOnly: boolean(),
+            secretFile: string(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+            user: string(),
+        });
+    export let io_k8s_api_core_v1_CinderPersistentVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            volumeID: string(),
+        });
+    export let io_k8s_api_core_v1_CinderVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+            volumeID: string(),
+        });
+    export let io_k8s_api_core_v1_ClientIPConfig: ObjectSchema = object({
+            timeoutSeconds: number().integer(),
+        });
+    export let io_k8s_api_core_v1_ComponentCondition: ObjectSchema = object({
+            error: string(),
+            message: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_ComponentStatus: ObjectSchema = object({
+            apiVersion: string(),
+            conditions: array().items(lazy(()=>io_k8s_api_core_v1_ComponentCondition)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+        });
+    export let io_k8s_api_core_v1_ComponentStatusList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_ComponentStatus)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_ConfigMap: ObjectSchema = object({
+            apiVersion: string(),
+            binaryData: object({
+            }),
+            data: object({
+            }),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+        });
+    export let io_k8s_api_core_v1_ConfigMapEnvSource: ObjectSchema = object({
+            name: string(),
+            optional: boolean(),
+        });
+    export let io_k8s_api_core_v1_ConfigMapKeySelector: ObjectSchema = object({
+            key: string(),
+            name: string(),
+            optional: boolean(),
+        });
+    export let io_k8s_api_core_v1_ConfigMapList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_ConfigMap)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_ConfigMapNodeConfigSource: ObjectSchema = object({
+            kubeletConfigKey: string(),
+            name: string(),
+            namespace: string(),
+            resourceVersion: string(),
+            uid: string(),
+        });
+    export let io_k8s_api_core_v1_ConfigMapProjection: ObjectSchema = object({
+            items: array().items(lazy(()=>io_k8s_api_core_v1_KeyToPath)),
+            name: string(),
+            optional: boolean(),
+        });
+    export let io_k8s_api_core_v1_ConfigMapVolumeSource: ObjectSchema = object({
+            defaultMode: number().integer(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_KeyToPath)),
+            name: string(),
+            optional: boolean(),
+        });
+    export let io_k8s_api_core_v1_Container: ObjectSchema = object({
+            args: array().items(string()),
+            command: array().items(string()),
+            env: array().items(lazy(()=>io_k8s_api_core_v1_EnvVar)),
+            envFrom: array().items(lazy(()=>io_k8s_api_core_v1_EnvFromSource)),
+            image: string(),
+            imagePullPolicy: string(),
+            lifecycle: lazy(()=>io_k8s_api_core_v1_Lifecycle),
+            livenessProbe: lazy(()=>io_k8s_api_core_v1_Probe),
+            name: string(),
+            ports: array().items(lazy(()=>io_k8s_api_core_v1_ContainerPort)),
+            readinessProbe: lazy(()=>io_k8s_api_core_v1_Probe),
+            resources: lazy(()=>io_k8s_api_core_v1_ResourceRequirements),
+            securityContext: lazy(()=>io_k8s_api_core_v1_SecurityContext),
+            stdin: boolean(),
+            stdinOnce: boolean(),
+            terminationMessagePath: string(),
+            terminationMessagePolicy: string(),
+            tty: boolean(),
+            volumeDevices: array().items(lazy(()=>io_k8s_api_core_v1_VolumeDevice)),
+            volumeMounts: array().items(lazy(()=>io_k8s_api_core_v1_VolumeMount)),
+            workingDir: string(),
+        });
+    export let io_k8s_api_core_v1_ContainerImage: ObjectSchema = object({
+            names: array().items(string()),
+            sizeBytes: number().integer(),
+        });
+    export let io_k8s_api_core_v1_ContainerPort: ObjectSchema = object({
+            containerPort: number().integer(),
+            hostIP: string(),
+            hostPort: number().integer(),
+            name: string(),
+            protocol: string(),
+        });
+    export let io_k8s_api_core_v1_ContainerState: ObjectSchema = object({
+            running: lazy(()=>io_k8s_api_core_v1_ContainerStateRunning),
+            terminated: lazy(()=>io_k8s_api_core_v1_ContainerStateTerminated),
+            waiting: lazy(()=>io_k8s_api_core_v1_ContainerStateWaiting),
+        });
+    export let io_k8s_api_core_v1_ContainerStateRunning: ObjectSchema = object({
+            startedAt: string(),
+        });
+    export let io_k8s_api_core_v1_ContainerStateTerminated: ObjectSchema = object({
+            containerID: string(),
+            exitCode: number().integer(),
+            finishedAt: string(),
+            message: string(),
+            reason: string(),
+            signal: number().integer(),
+            startedAt: string(),
+        });
+    export let io_k8s_api_core_v1_ContainerStateWaiting: ObjectSchema = object({
+            message: string(),
+            reason: string(),
+        });
+    export let io_k8s_api_core_v1_ContainerStatus: ObjectSchema = object({
+            containerID: string(),
+            image: string(),
+            imageID: string(),
+            lastState: lazy(()=>io_k8s_api_core_v1_ContainerState),
+            name: string(),
+            ready: boolean(),
+            restartCount: number().integer(),
+            state: lazy(()=>io_k8s_api_core_v1_ContainerState),
+        });
+    export let io_k8s_api_core_v1_DaemonEndpoint: ObjectSchema = object({
+            Port: number().integer(),
+        });
+    export let io_k8s_api_core_v1_DownwardAPIProjection: ObjectSchema = object({
+            items: array().items(lazy(()=>io_k8s_api_core_v1_DownwardAPIVolumeFile)),
+        });
+    export let io_k8s_api_core_v1_DownwardAPIVolumeFile: ObjectSchema = object({
+            fieldRef: lazy(()=>io_k8s_api_core_v1_ObjectFieldSelector),
+            mode: number().integer(),
+            path: string(),
+            resourceFieldRef: lazy(()=>io_k8s_api_core_v1_ResourceFieldSelector),
+        });
+    export let io_k8s_api_core_v1_DownwardAPIVolumeSource: ObjectSchema = object({
+            defaultMode: number().integer(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_DownwardAPIVolumeFile)),
+        });
+    export let io_k8s_api_core_v1_EmptyDirVolumeSource: ObjectSchema = object({
+            medium: string(),
+            sizeLimit: string(),
+        });
+    export let io_k8s_api_core_v1_EndpointAddress: ObjectSchema = object({
+            hostname: string(),
+            ip: string(),
+            nodeName: string(),
+            targetRef: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+        });
+    export let io_k8s_api_core_v1_EndpointPort: ObjectSchema = object({
+            name: string(),
+            port: number().integer(),
+            protocol: string(),
+        });
+    export let io_k8s_api_core_v1_EndpointSubset: ObjectSchema = object({
+            addresses: array().items(lazy(()=>io_k8s_api_core_v1_EndpointAddress)),
+            notReadyAddresses: array().items(lazy(()=>io_k8s_api_core_v1_EndpointAddress)),
+            ports: array().items(lazy(()=>io_k8s_api_core_v1_EndpointPort)),
+        });
+    export let io_k8s_api_core_v1_Endpoints: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            subsets: array().items(lazy(()=>io_k8s_api_core_v1_EndpointSubset)),
+        });
+    export let io_k8s_api_core_v1_EndpointsList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_Endpoints)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_EnvFromSource: ObjectSchema = object({
+            configMapRef: lazy(()=>io_k8s_api_core_v1_ConfigMapEnvSource),
+            prefix: string(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_SecretEnvSource),
+        });
+    export let io_k8s_api_core_v1_EnvVar: ObjectSchema = object({
+            name: string(),
+            value: string(),
+            valueFrom: lazy(()=>io_k8s_api_core_v1_EnvVarSource),
+        });
+    export let io_k8s_api_core_v1_EnvVarSource: ObjectSchema = object({
+            configMapKeyRef: lazy(()=>io_k8s_api_core_v1_ConfigMapKeySelector),
+            fieldRef: lazy(()=>io_k8s_api_core_v1_ObjectFieldSelector),
+            resourceFieldRef: lazy(()=>io_k8s_api_core_v1_ResourceFieldSelector),
+            secretKeyRef: lazy(()=>io_k8s_api_core_v1_SecretKeySelector),
+        });
+    export let io_k8s_api_core_v1_Event: ObjectSchema = object({
+            action: string(),
+            apiVersion: string(),
+            count: number().integer(),
+            eventTime: string(),
+            firstTimestamp: string(),
+            involvedObject: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+            kind: string(),
+            lastTimestamp: string(),
+            message: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            reason: string(),
+            related: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+            reportingComponent: string(),
+            reportingInstance: string(),
+            series: lazy(()=>io_k8s_api_core_v1_EventSeries),
+            source: lazy(()=>io_k8s_api_core_v1_EventSource),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_EventList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_Event)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_EventSeries: ObjectSchema = object({
+            count: number().integer(),
+            lastObservedTime: string(),
+            state: string(),
+        });
+    export let io_k8s_api_core_v1_EventSource: ObjectSchema = object({
+            component: string(),
+            host: string(),
+        });
+    export let io_k8s_api_core_v1_ExecAction: ObjectSchema = object({
+            command: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_FCVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            lun: number().integer(),
+            readOnly: boolean(),
+            targetWWNs: array().items(string()),
+            wwids: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_FlexPersistentVolumeSource: ObjectSchema = object({
+            driver: string(),
+            fsType: string(),
+            options: object({
+            }),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+        });
+    export let io_k8s_api_core_v1_FlexVolumeSource: ObjectSchema = object({
+            driver: string(),
+            fsType: string(),
+            options: object({
+            }),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+        });
+    export let io_k8s_api_core_v1_FlockerVolumeSource: ObjectSchema = object({
+            datasetName: string(),
+            datasetUUID: string(),
+        });
+    export let io_k8s_api_core_v1_GCEPersistentDiskVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            partition: number().integer(),
+            pdName: string(),
+            readOnly: boolean(),
+        });
+    export let io_k8s_api_core_v1_GitRepoVolumeSource: ObjectSchema = object({
+            directory: string(),
+            repository: string(),
+            revision: string(),
+        });
+    export let io_k8s_api_core_v1_GlusterfsPersistentVolumeSource: ObjectSchema = object({
+            endpoints: string(),
+            endpointsNamespace: string(),
+            path: string(),
+            readOnly: boolean(),
+        });
+    export let io_k8s_api_core_v1_GlusterfsVolumeSource: ObjectSchema = object({
+            endpoints: string(),
+            path: string(),
+            readOnly: boolean(),
+        });
+    export let io_k8s_api_core_v1_HTTPGetAction: ObjectSchema = object({
+            host: string(),
+            httpHeaders: array().items(lazy(()=>io_k8s_api_core_v1_HTTPHeader)),
+            path: string(),
+            port: string(),
+            scheme: string(),
+        });
+    export let io_k8s_api_core_v1_HTTPHeader: ObjectSchema = object({
+            name: string(),
+            value: string(),
+        });
+    export let io_k8s_api_core_v1_Handler: ObjectSchema = object({
+            exec: lazy(()=>io_k8s_api_core_v1_ExecAction),
+            httpGet: lazy(()=>io_k8s_api_core_v1_HTTPGetAction),
+            tcpSocket: lazy(()=>io_k8s_api_core_v1_TCPSocketAction),
+        });
+    export let io_k8s_api_core_v1_HostAlias: ObjectSchema = object({
+            hostnames: array().items(string()),
+            ip: string(),
+        });
+    export let io_k8s_api_core_v1_HostPathVolumeSource: ObjectSchema = object({
+            path: string(),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_ISCSIPersistentVolumeSource: ObjectSchema = object({
+            chapAuthDiscovery: boolean(),
+            chapAuthSession: boolean(),
+            fsType: string(),
+            initiatorName: string(),
+            iqn: string(),
+            iscsiInterface: string(),
+            lun: number().integer(),
+            portals: array().items(string()),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            targetPortal: string(),
+        });
+    export let io_k8s_api_core_v1_ISCSIVolumeSource: ObjectSchema = object({
+            chapAuthDiscovery: boolean(),
+            chapAuthSession: boolean(),
+            fsType: string(),
+            initiatorName: string(),
+            iqn: string(),
+            iscsiInterface: string(),
+            lun: number().integer(),
+            portals: array().items(string()),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+            targetPortal: string(),
+        });
+    export let io_k8s_api_core_v1_KeyToPath: ObjectSchema = object({
+            key: string(),
+            mode: number().integer(),
+            path: string(),
+        });
+    export let io_k8s_api_core_v1_Lifecycle: ObjectSchema = object({
+            postStart: lazy(()=>io_k8s_api_core_v1_Handler),
+            preStop: lazy(()=>io_k8s_api_core_v1_Handler),
+        });
+    export let io_k8s_api_core_v1_LimitRange: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_LimitRangeSpec),
+        });
+    export let io_k8s_api_core_v1_LimitRangeItem: ObjectSchema = object({
+            default: object({
+            }),
+            defaultRequest: object({
+            }),
+            max: object({
+            }),
+            maxLimitRequestRatio: object({
+            }),
+            min: object({
+            }),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_LimitRangeList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_LimitRange)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_LimitRangeSpec: ObjectSchema = object({
+            limits: array().items(lazy(()=>io_k8s_api_core_v1_LimitRangeItem)),
+        });
+    export let io_k8s_api_core_v1_LoadBalancerIngress: ObjectSchema = object({
+            hostname: string(),
+            ip: string(),
+        });
+    export let io_k8s_api_core_v1_LoadBalancerStatus: ObjectSchema = object({
+            ingress: array().items(lazy(()=>io_k8s_api_core_v1_LoadBalancerIngress)),
+        });
+    export let io_k8s_api_core_v1_LocalObjectReference: ObjectSchema = object({
+            name: string(),
+        });
+    export let io_k8s_api_core_v1_LocalVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            path: string(),
+        });
+    export let io_k8s_api_core_v1_NFSVolumeSource: ObjectSchema = object({
+            path: string(),
+            readOnly: boolean(),
+            server: string(),
+        });
+    export let io_k8s_api_core_v1_Namespace: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_NamespaceSpec),
+            status: lazy(()=>io_k8s_api_core_v1_NamespaceStatus),
+        });
+    export let io_k8s_api_core_v1_NamespaceList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_Namespace)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_NamespaceSpec: ObjectSchema = object({
+            finalizers: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_NamespaceStatus: ObjectSchema = object({
+            phase: string(),
+        });
+    export let io_k8s_api_core_v1_Node: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_NodeSpec),
+            status: lazy(()=>io_k8s_api_core_v1_NodeStatus),
+        });
+    export let io_k8s_api_core_v1_NodeAddress: ObjectSchema = object({
+            address: string(),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_NodeAffinity: ObjectSchema = object({
+            preferredDuringSchedulingIgnoredDuringExecution: array().items(lazy(()=>io_k8s_api_core_v1_PreferredSchedulingTerm)),
+            requiredDuringSchedulingIgnoredDuringExecution: lazy(()=>io_k8s_api_core_v1_NodeSelector),
+        });
+    export let io_k8s_api_core_v1_NodeCondition: ObjectSchema = object({
+            lastHeartbeatTime: string(),
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_NodeConfigSource: ObjectSchema = object({
+            configMap: lazy(()=>io_k8s_api_core_v1_ConfigMapNodeConfigSource),
+        });
+    export let io_k8s_api_core_v1_NodeConfigStatus: ObjectSchema = object({
+            active: lazy(()=>io_k8s_api_core_v1_NodeConfigSource),
+            assigned: lazy(()=>io_k8s_api_core_v1_NodeConfigSource),
+            error: string(),
+            lastKnownGood: lazy(()=>io_k8s_api_core_v1_NodeConfigSource),
+        });
+    export let io_k8s_api_core_v1_NodeDaemonEndpoints: ObjectSchema = object({
+            kubeletEndpoint: lazy(()=>io_k8s_api_core_v1_DaemonEndpoint),
+        });
+    export let io_k8s_api_core_v1_NodeList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_Node)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_NodeSelector: ObjectSchema = object({
+            nodeSelectorTerms: array().items(lazy(()=>io_k8s_api_core_v1_NodeSelectorTerm)),
+        });
+    export let io_k8s_api_core_v1_NodeSelectorRequirement: ObjectSchema = object({
+            key: string(),
+            operator: string(),
+            values: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_NodeSelectorTerm: ObjectSchema = object({
+            matchExpressions: array().items(lazy(()=>io_k8s_api_core_v1_NodeSelectorRequirement)),
+            matchFields: array().items(lazy(()=>io_k8s_api_core_v1_NodeSelectorRequirement)),
+        });
+    export let io_k8s_api_core_v1_NodeSpec: ObjectSchema = object({
+            configSource: lazy(()=>io_k8s_api_core_v1_NodeConfigSource),
+            externalID: string(),
+            podCIDR: string(),
+            providerID: string(),
+            taints: array().items(lazy(()=>io_k8s_api_core_v1_Taint)),
+            unschedulable: boolean(),
+        });
+    export let io_k8s_api_core_v1_NodeStatus: ObjectSchema = object({
+            addresses: array().items(lazy(()=>io_k8s_api_core_v1_NodeAddress)),
+            allocatable: object({
+            }),
+            capacity: object({
+            }),
+            conditions: array().items(lazy(()=>io_k8s_api_core_v1_NodeCondition)),
+            config: lazy(()=>io_k8s_api_core_v1_NodeConfigStatus),
+            daemonEndpoints: lazy(()=>io_k8s_api_core_v1_NodeDaemonEndpoints),
+            images: array().items(lazy(()=>io_k8s_api_core_v1_ContainerImage)),
+            nodeInfo: lazy(()=>io_k8s_api_core_v1_NodeSystemInfo),
+            phase: string(),
+            volumesAttached: array().items(lazy(()=>io_k8s_api_core_v1_AttachedVolume)),
+            volumesInUse: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_NodeSystemInfo: ObjectSchema = object({
+            architecture: string(),
+            bootID: string(),
+            containerRuntimeVersion: string(),
+            kernelVersion: string(),
+            kubeProxyVersion: string(),
+            kubeletVersion: string(),
+            machineID: string(),
+            operatingSystem: string(),
+            osImage: string(),
+            systemUUID: string(),
+        });
+    export let io_k8s_api_core_v1_ObjectFieldSelector: ObjectSchema = object({
+            apiVersion: string(),
+            fieldPath: string(),
+        });
+    export let io_k8s_api_core_v1_ObjectReference: ObjectSchema = object({
+            apiVersion: string(),
+            fieldPath: string(),
+            kind: string(),
+            name: string(),
+            namespace: string(),
+            resourceVersion: string(),
+            uid: string(),
+        });
+    export let io_k8s_api_core_v1_PersistentVolume: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_PersistentVolumeSpec),
+            status: lazy(()=>io_k8s_api_core_v1_PersistentVolumeStatus),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeClaim: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_PersistentVolumeClaimSpec),
+            status: lazy(()=>io_k8s_api_core_v1_PersistentVolumeClaimStatus),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeClaimCondition: ObjectSchema = object({
+            lastProbeTime: string(),
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeClaimList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_PersistentVolumeClaim)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeClaimSpec: ObjectSchema = object({
+            accessModes: array().items(string()),
+            dataSource: lazy(()=>io_k8s_api_core_v1_TypedLocalObjectReference),
+            resources: lazy(()=>io_k8s_api_core_v1_ResourceRequirements),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            storageClassName: string(),
+            volumeMode: string(),
+            volumeName: string(),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeClaimStatus: ObjectSchema = object({
+            accessModes: array().items(string()),
+            capacity: object({
+            }),
+            conditions: array().items(lazy(()=>io_k8s_api_core_v1_PersistentVolumeClaimCondition)),
+            phase: string(),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeClaimVolumeSource: ObjectSchema = object({
+            claimName: string(),
+            readOnly: boolean(),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_PersistentVolume)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeSpec: ObjectSchema = object({
+            accessModes: array().items(string()),
+            awsElasticBlockStore: lazy(()=>io_k8s_api_core_v1_AWSElasticBlockStoreVolumeSource),
+            azureDisk: lazy(()=>io_k8s_api_core_v1_AzureDiskVolumeSource),
+            azureFile: lazy(()=>io_k8s_api_core_v1_AzureFilePersistentVolumeSource),
+            capacity: object({
+            }),
+            cephfs: lazy(()=>io_k8s_api_core_v1_CephFSPersistentVolumeSource),
+            cinder: lazy(()=>io_k8s_api_core_v1_CinderPersistentVolumeSource),
+            claimRef: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+            csi: lazy(()=>io_k8s_api_core_v1_CSIPersistentVolumeSource),
+            fc: lazy(()=>io_k8s_api_core_v1_FCVolumeSource),
+            flexVolume: lazy(()=>io_k8s_api_core_v1_FlexPersistentVolumeSource),
+            flocker: lazy(()=>io_k8s_api_core_v1_FlockerVolumeSource),
+            gcePersistentDisk: lazy(()=>io_k8s_api_core_v1_GCEPersistentDiskVolumeSource),
+            glusterfs: lazy(()=>io_k8s_api_core_v1_GlusterfsPersistentVolumeSource),
+            hostPath: lazy(()=>io_k8s_api_core_v1_HostPathVolumeSource),
+            iscsi: lazy(()=>io_k8s_api_core_v1_ISCSIPersistentVolumeSource),
+            local: lazy(()=>io_k8s_api_core_v1_LocalVolumeSource),
+            mountOptions: array().items(string()),
+            nfs: lazy(()=>io_k8s_api_core_v1_NFSVolumeSource),
+            nodeAffinity: lazy(()=>io_k8s_api_core_v1_VolumeNodeAffinity),
+            persistentVolumeReclaimPolicy: string(),
+            photonPersistentDisk: lazy(()=>io_k8s_api_core_v1_PhotonPersistentDiskVolumeSource),
+            portworxVolume: lazy(()=>io_k8s_api_core_v1_PortworxVolumeSource),
+            quobyte: lazy(()=>io_k8s_api_core_v1_QuobyteVolumeSource),
+            rbd: lazy(()=>io_k8s_api_core_v1_RBDPersistentVolumeSource),
+            scaleIO: lazy(()=>io_k8s_api_core_v1_ScaleIOPersistentVolumeSource),
+            storageClassName: string(),
+            storageos: lazy(()=>io_k8s_api_core_v1_StorageOSPersistentVolumeSource),
+            volumeMode: string(),
+            vsphereVolume: lazy(()=>io_k8s_api_core_v1_VsphereVirtualDiskVolumeSource),
+        });
+    export let io_k8s_api_core_v1_PersistentVolumeStatus: ObjectSchema = object({
+            message: string(),
+            phase: string(),
+            reason: string(),
+        });
+    export let io_k8s_api_core_v1_PhotonPersistentDiskVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            pdID: string(),
+        });
+    export let io_k8s_api_core_v1_Pod: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_PodSpec),
+            status: lazy(()=>io_k8s_api_core_v1_PodStatus),
+        });
+    export let io_k8s_api_core_v1_PodAffinity: ObjectSchema = object({
+            preferredDuringSchedulingIgnoredDuringExecution: array().items(lazy(()=>io_k8s_api_core_v1_WeightedPodAffinityTerm)),
+            requiredDuringSchedulingIgnoredDuringExecution: array().items(lazy(()=>io_k8s_api_core_v1_PodAffinityTerm)),
+        });
+    export let io_k8s_api_core_v1_PodAffinityTerm: ObjectSchema = object({
+            labelSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            namespaces: array().items(string()),
+            topologyKey: string(),
+        });
+    export let io_k8s_api_core_v1_PodAntiAffinity: ObjectSchema = object({
+            preferredDuringSchedulingIgnoredDuringExecution: array().items(lazy(()=>io_k8s_api_core_v1_WeightedPodAffinityTerm)),
+            requiredDuringSchedulingIgnoredDuringExecution: array().items(lazy(()=>io_k8s_api_core_v1_PodAffinityTerm)),
+        });
+    export let io_k8s_api_core_v1_PodCondition: ObjectSchema = object({
+            lastProbeTime: string(),
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_PodDNSConfig: ObjectSchema = object({
+            nameservers: array().items(string()),
+            options: array().items(lazy(()=>io_k8s_api_core_v1_PodDNSConfigOption)),
+            searches: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_PodDNSConfigOption: ObjectSchema = object({
+            name: string(),
+            value: string(),
+        });
+    export let io_k8s_api_core_v1_PodList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_Pod)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_PodReadinessGate: ObjectSchema = object({
+            conditionType: string(),
+        });
+    export let io_k8s_api_core_v1_PodSecurityContext: ObjectSchema = object({
+            fsGroup: number().integer(),
+            runAsGroup: number().integer(),
+            runAsNonRoot: boolean(),
+            runAsUser: number().integer(),
+            seLinuxOptions: lazy(()=>io_k8s_api_core_v1_SELinuxOptions),
+            supplementalGroups: array().items(number().integer()),
+            sysctls: array().items(lazy(()=>io_k8s_api_core_v1_Sysctl)),
+            windowsOptions: object({
+            }),
+        });
+    export let io_k8s_api_core_v1_PodSpec: ObjectSchema = object({
+            activeDeadlineSeconds: number().integer(),
+            affinity: lazy(()=>io_k8s_api_core_v1_Affinity),
+            automountServiceAccountToken: boolean(),
+            containers: array().items(lazy(()=>io_k8s_api_core_v1_Container)),
+            dnsConfig: lazy(()=>io_k8s_api_core_v1_PodDNSConfig),
+            dnsPolicy: string(),
+            enableServiceLinks: boolean(),
+            hostAliases: array().items(lazy(()=>io_k8s_api_core_v1_HostAlias)),
+            hostIPC: boolean(),
+            hostNetwork: boolean(),
+            hostPID: boolean(),
+            hostname: string(),
+            imagePullSecrets: array().items(lazy(()=>io_k8s_api_core_v1_LocalObjectReference)),
+            initContainers: array().items(lazy(()=>io_k8s_api_core_v1_Container)),
+            nodeName: string(),
+            nodeSelector: object({
+            }),
+            priority: number().integer(),
+            priorityClassName: string(),
+            readinessGates: array().items(lazy(()=>io_k8s_api_core_v1_PodReadinessGate)),
+            restartPolicy: string(),
+            runtimeClassName: string(),
+            schedulerName: string(),
+            securityContext: lazy(()=>io_k8s_api_core_v1_PodSecurityContext),
+            serviceAccount: string(),
+            serviceAccountName: string(),
+            shareProcessNamespace: boolean(),
+            subdomain: string(),
+            terminationGracePeriodSeconds: number().integer(),
+            tolerations: array().items(lazy(()=>io_k8s_api_core_v1_Toleration)),
+            volumes: array().items(lazy(()=>io_k8s_api_core_v1_Volume)),
+        });
+    export let io_k8s_api_core_v1_PodStatus: ObjectSchema = object({
+            conditions: array().items(lazy(()=>io_k8s_api_core_v1_PodCondition)),
+            containerStatuses: array().items(lazy(()=>io_k8s_api_core_v1_ContainerStatus)),
+            hostIP: string(),
+            initContainerStatuses: array().items(lazy(()=>io_k8s_api_core_v1_ContainerStatus)),
+            message: string(),
+            nominatedNodeName: string(),
+            phase: string(),
+            podIP: string(),
+            qosClass: string(),
+            reason: string(),
+            startTime: string(),
+        });
+    export let io_k8s_api_core_v1_PodTemplate: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+        });
+    export let io_k8s_api_core_v1_PodTemplateList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_PodTemplate)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_PodTemplateSpec: ObjectSchema = object({
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_PodSpec),
+        });
+    export let io_k8s_api_core_v1_PortworxVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            readOnly: boolean(),
+            volumeID: string(),
+        });
+    export let io_k8s_api_core_v1_PreferredSchedulingTerm: ObjectSchema = object({
+            preference: lazy(()=>io_k8s_api_core_v1_NodeSelectorTerm),
+            weight: number().integer(),
+        });
+    export let io_k8s_api_core_v1_Probe: ObjectSchema = object({
+            exec: lazy(()=>io_k8s_api_core_v1_ExecAction),
+            failureThreshold: number().integer(),
+            httpGet: lazy(()=>io_k8s_api_core_v1_HTTPGetAction),
+            initialDelaySeconds: number().integer(),
+            periodSeconds: number().integer(),
+            successThreshold: number().integer(),
+            tcpSocket: lazy(()=>io_k8s_api_core_v1_TCPSocketAction),
+            timeoutSeconds: number().integer(),
+        });
+    export let io_k8s_api_core_v1_ProjectedVolumeSource: ObjectSchema = object({
+            defaultMode: number().integer(),
+            sources: array().items(lazy(()=>io_k8s_api_core_v1_VolumeProjection)),
+        });
+    export let io_k8s_api_core_v1_QuobyteVolumeSource: ObjectSchema = object({
+            group: string(),
+            readOnly: boolean(),
+            registry: string(),
+            tenant: string(),
+            user: string(),
+            volume: string(),
+        });
+    export let io_k8s_api_core_v1_RBDPersistentVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            image: string(),
+            keyring: string(),
+            monitors: array().items(string()),
+            pool: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            user: string(),
+        });
+    export let io_k8s_api_core_v1_RBDVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            image: string(),
+            keyring: string(),
+            monitors: array().items(string()),
+            pool: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+            user: string(),
+        });
+    export let io_k8s_api_core_v1_ReplicationController: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_ReplicationControllerSpec),
+            status: lazy(()=>io_k8s_api_core_v1_ReplicationControllerStatus),
+        });
+    export let io_k8s_api_core_v1_ReplicationControllerCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_ReplicationControllerList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_ReplicationController)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_ReplicationControllerSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            replicas: number().integer(),
+            selector: object({
+            }),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+        });
+    export let io_k8s_api_core_v1_ReplicationControllerStatus: ObjectSchema = object({
+            availableReplicas: number().integer(),
+            conditions: array().items(lazy(()=>io_k8s_api_core_v1_ReplicationControllerCondition)),
+            fullyLabeledReplicas: number().integer(),
+            observedGeneration: number().integer(),
+            readyReplicas: number().integer(),
+            replicas: number().integer(),
+        });
+    export let io_k8s_api_core_v1_ResourceFieldSelector: ObjectSchema = object({
+            containerName: string(),
+            divisor: string(),
+            resource: string(),
+        });
+    export let io_k8s_api_core_v1_ResourceQuota: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_ResourceQuotaSpec),
+            status: lazy(()=>io_k8s_api_core_v1_ResourceQuotaStatus),
+        });
+    export let io_k8s_api_core_v1_ResourceQuotaList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_ResourceQuota)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_ResourceQuotaSpec: ObjectSchema = object({
+            hard: object({
+            }),
+            scopeSelector: lazy(()=>io_k8s_api_core_v1_ScopeSelector),
+            scopes: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_ResourceQuotaStatus: ObjectSchema = object({
+            hard: object({
+            }),
+            used: object({
+            }),
+        });
+    export let io_k8s_api_core_v1_ResourceRequirements: ObjectSchema = object({
+            limits: object({
+            }),
+            requests: object({
+            }),
+        });
+    export let io_k8s_api_core_v1_SELinuxOptions: ObjectSchema = object({
+            level: string(),
+            role: string(),
+            type: string(),
+            user: string(),
+        });
+    export let io_k8s_api_core_v1_ScaleIOPersistentVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            gateway: string(),
+            protectionDomain: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_SecretReference),
+            sslEnabled: boolean(),
+            storageMode: string(),
+            storagePool: string(),
+            system: string(),
+            volumeName: string(),
+        });
+    export let io_k8s_api_core_v1_ScaleIOVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            gateway: string(),
+            protectionDomain: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+            sslEnabled: boolean(),
+            storageMode: string(),
+            storagePool: string(),
+            system: string(),
+            volumeName: string(),
+        });
+    export let io_k8s_api_core_v1_ScopeSelector: ObjectSchema = object({
+            matchExpressions: array().items(lazy(()=>io_k8s_api_core_v1_ScopedResourceSelectorRequirement)),
+        });
+    export let io_k8s_api_core_v1_ScopedResourceSelectorRequirement: ObjectSchema = object({
+            operator: string(),
+            scopeName: string(),
+            values: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_Secret: ObjectSchema = object({
+            apiVersion: string(),
+            data: object({
+            }),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            stringData: object({
+            }),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_SecretEnvSource: ObjectSchema = object({
+            name: string(),
+            optional: boolean(),
+        });
+    export let io_k8s_api_core_v1_SecretKeySelector: ObjectSchema = object({
+            key: string(),
+            name: string(),
+            optional: boolean(),
+        });
+    export let io_k8s_api_core_v1_SecretList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_Secret)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_SecretProjection: ObjectSchema = object({
+            items: array().items(lazy(()=>io_k8s_api_core_v1_KeyToPath)),
+            name: string(),
+            optional: boolean(),
+        });
+    export let io_k8s_api_core_v1_SecretReference: ObjectSchema = object({
+            name: string(),
+            namespace: string(),
+        });
+    export let io_k8s_api_core_v1_SecretVolumeSource: ObjectSchema = object({
+            defaultMode: number().integer(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_KeyToPath)),
+            optional: boolean(),
+            secretName: string(),
+        });
+    export let io_k8s_api_core_v1_SecurityContext: ObjectSchema = object({
+            allowPrivilegeEscalation: boolean(),
+            capabilities: lazy(()=>io_k8s_api_core_v1_Capabilities),
+            privileged: boolean(),
+            procMount: string(),
+            readOnlyRootFilesystem: boolean(),
+            runAsGroup: number().integer(),
+            runAsNonRoot: boolean(),
+            runAsUser: number().integer(),
+            seLinuxOptions: lazy(()=>io_k8s_api_core_v1_SELinuxOptions),
+            windowsOptions: object({
+            }),
+        });
+    export let io_k8s_api_core_v1_Service: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_core_v1_ServiceSpec),
+            status: lazy(()=>io_k8s_api_core_v1_ServiceStatus),
+        });
+    export let io_k8s_api_core_v1_ServiceAccount: ObjectSchema = object({
+            apiVersion: string(),
+            automountServiceAccountToken: boolean(),
+            imagePullSecrets: array().items(lazy(()=>io_k8s_api_core_v1_LocalObjectReference)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            secrets: array().items(lazy(()=>io_k8s_api_core_v1_ObjectReference)),
+        });
+    export let io_k8s_api_core_v1_ServiceAccountList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_ServiceAccount)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_ServiceAccountTokenProjection: ObjectSchema = object({
+            audience: string(),
+            expirationSeconds: number().integer(),
+            path: string(),
+        });
+    export let io_k8s_api_core_v1_ServiceList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_core_v1_Service)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_core_v1_ServicePort: ObjectSchema = object({
+            name: string(),
+            nodePort: number().integer(),
+            port: number().integer(),
+            protocol: string(),
+            targetPort: string(),
+        });
+    export let io_k8s_api_core_v1_ServiceSpec: ObjectSchema = object({
+            clusterIP: string(),
+            externalIPs: array().items(string()),
+            externalName: string(),
+            externalTrafficPolicy: string(),
+            healthCheckNodePort: number().integer(),
+            loadBalancerIP: string(),
+            loadBalancerSourceRanges: array().items(string()),
+            ports: array().items(lazy(()=>io_k8s_api_core_v1_ServicePort)),
+            publishNotReadyAddresses: boolean(),
+            selector: object({
+            }),
+            sessionAffinity: string(),
+            sessionAffinityConfig: lazy(()=>io_k8s_api_core_v1_SessionAffinityConfig),
+            type: string(),
+        });
+    export let io_k8s_api_core_v1_ServiceStatus: ObjectSchema = object({
+            loadBalancer: lazy(()=>io_k8s_api_core_v1_LoadBalancerStatus),
+        });
+    export let io_k8s_api_core_v1_SessionAffinityConfig: ObjectSchema = object({
+            clientIP: lazy(()=>io_k8s_api_core_v1_ClientIPConfig),
+        });
+    export let io_k8s_api_core_v1_StorageOSPersistentVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+            volumeName: string(),
+            volumeNamespace: string(),
+        });
+    export let io_k8s_api_core_v1_StorageOSVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            readOnly: boolean(),
+            secretRef: lazy(()=>io_k8s_api_core_v1_LocalObjectReference),
+            volumeName: string(),
+            volumeNamespace: string(),
+        });
+    export let io_k8s_api_core_v1_Sysctl: ObjectSchema = object({
+            name: string(),
+            value: string(),
+        });
+    export let io_k8s_api_core_v1_TCPSocketAction: ObjectSchema = object({
+            host: string(),
+            port: string(),
+        });
+    export let io_k8s_api_core_v1_Taint: ObjectSchema = object({
+            effect: string(),
+            key: string(),
+            timeAdded: string(),
+            value: string(),
+        });
+    export let io_k8s_api_core_v1_Toleration: ObjectSchema = object({
+            effect: string(),
+            key: string(),
+            operator: string(),
+            tolerationSeconds: number().integer(),
+            value: string(),
+        });
+    export let io_k8s_api_core_v1_TopologySelectorLabelRequirement: ObjectSchema = object({
+            key: string(),
+            values: array().items(string()),
+        });
+    export let io_k8s_api_core_v1_TopologySelectorTerm: ObjectSchema = object({
+            matchLabelExpressions: array().items(lazy(()=>io_k8s_api_core_v1_TopologySelectorLabelRequirement)),
+        });
+    export let io_k8s_api_core_v1_TypedLocalObjectReference: ObjectSchema = object({
+            apiGroup: string(),
+            kind: string(),
+            name: string(),
+        });
+    export let io_k8s_api_core_v1_Volume: ObjectSchema = object({
+            awsElasticBlockStore: lazy(()=>io_k8s_api_core_v1_AWSElasticBlockStoreVolumeSource),
+            azureDisk: lazy(()=>io_k8s_api_core_v1_AzureDiskVolumeSource),
+            azureFile: lazy(()=>io_k8s_api_core_v1_AzureFileVolumeSource),
+            cephfs: lazy(()=>io_k8s_api_core_v1_CephFSVolumeSource),
+            cinder: lazy(()=>io_k8s_api_core_v1_CinderVolumeSource),
+            configMap: lazy(()=>io_k8s_api_core_v1_ConfigMapVolumeSource),
+            csi: lazy(()=>io_k8s_api_core_v1_CSIVolumeSource),
+            downwardAPI: lazy(()=>io_k8s_api_core_v1_DownwardAPIVolumeSource),
+            emptyDir: lazy(()=>io_k8s_api_core_v1_EmptyDirVolumeSource),
+            fc: lazy(()=>io_k8s_api_core_v1_FCVolumeSource),
+            flexVolume: lazy(()=>io_k8s_api_core_v1_FlexVolumeSource),
+            flocker: lazy(()=>io_k8s_api_core_v1_FlockerVolumeSource),
+            gcePersistentDisk: lazy(()=>io_k8s_api_core_v1_GCEPersistentDiskVolumeSource),
+            gitRepo: lazy(()=>io_k8s_api_core_v1_GitRepoVolumeSource),
+            glusterfs: lazy(()=>io_k8s_api_core_v1_GlusterfsVolumeSource),
+            hostPath: lazy(()=>io_k8s_api_core_v1_HostPathVolumeSource),
+            iscsi: lazy(()=>io_k8s_api_core_v1_ISCSIVolumeSource),
+            name: string(),
+            nfs: lazy(()=>io_k8s_api_core_v1_NFSVolumeSource),
+            persistentVolumeClaim: lazy(()=>io_k8s_api_core_v1_PersistentVolumeClaimVolumeSource),
+            photonPersistentDisk: lazy(()=>io_k8s_api_core_v1_PhotonPersistentDiskVolumeSource),
+            portworxVolume: lazy(()=>io_k8s_api_core_v1_PortworxVolumeSource),
+            projected: lazy(()=>io_k8s_api_core_v1_ProjectedVolumeSource),
+            quobyte: lazy(()=>io_k8s_api_core_v1_QuobyteVolumeSource),
+            rbd: lazy(()=>io_k8s_api_core_v1_RBDVolumeSource),
+            scaleIO: lazy(()=>io_k8s_api_core_v1_ScaleIOVolumeSource),
+            secret: lazy(()=>io_k8s_api_core_v1_SecretVolumeSource),
+            storageos: lazy(()=>io_k8s_api_core_v1_StorageOSVolumeSource),
+            vsphereVolume: lazy(()=>io_k8s_api_core_v1_VsphereVirtualDiskVolumeSource),
+        });
+    export let io_k8s_api_core_v1_VolumeDevice: ObjectSchema = object({
+            devicePath: string(),
+            name: string(),
+        });
+    export let io_k8s_api_core_v1_VolumeMount: ObjectSchema = object({
+            mountPath: string(),
+            mountPropagation: string(),
+            name: string(),
+            readOnly: boolean(),
+            subPath: string(),
+            subPathExpr: string(),
+        });
+    export let io_k8s_api_core_v1_VolumeNodeAffinity: ObjectSchema = object({
+            required: lazy(()=>io_k8s_api_core_v1_NodeSelector),
+        });
+    export let io_k8s_api_core_v1_VolumeProjection: ObjectSchema = object({
+            configMap: lazy(()=>io_k8s_api_core_v1_ConfigMapProjection),
+            downwardAPI: lazy(()=>io_k8s_api_core_v1_DownwardAPIProjection),
+            secret: lazy(()=>io_k8s_api_core_v1_SecretProjection),
+            serviceAccountToken: lazy(()=>io_k8s_api_core_v1_ServiceAccountTokenProjection),
+        });
+    export let io_k8s_api_core_v1_VsphereVirtualDiskVolumeSource: ObjectSchema = object({
+            fsType: string(),
+            storagePolicyID: string(),
+            storagePolicyName: string(),
+            volumePath: string(),
+        });
+    export let io_k8s_api_core_v1_WeightedPodAffinityTerm: ObjectSchema = object({
+            podAffinityTerm: lazy(()=>io_k8s_api_core_v1_PodAffinityTerm),
+            weight: number().integer(),
+        });
+    export let io_k8s_api_events_v1beta1_Event: ObjectSchema = object({
+            action: string(),
+            apiVersion: string(),
+            deprecatedCount: number().integer(),
+            deprecatedFirstTimestamp: string(),
+            deprecatedLastTimestamp: string(),
+            deprecatedSource: lazy(()=>io_k8s_api_core_v1_EventSource),
+            eventTime: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            note: string(),
+            reason: string(),
+            regarding: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+            related: lazy(()=>io_k8s_api_core_v1_ObjectReference),
+            reportingController: string(),
+            reportingInstance: string(),
+            series: lazy(()=>io_k8s_api_events_v1beta1_EventSeries),
+            type: string(),
+        });
+    export let io_k8s_api_events_v1beta1_EventList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_events_v1beta1_Event)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_events_v1beta1_EventSeries: ObjectSchema = object({
+            count: number().integer(),
+            lastObservedTime: string(),
+            state: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_AllowedCSIDriver: ObjectSchema = object({
+            name: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_AllowedFlexVolume: ObjectSchema = object({
+            driver: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_AllowedHostPath: ObjectSchema = object({
+            pathPrefix: string(),
+            readOnly: boolean(),
+        });
+    export let io_k8s_api_extensions_v1beta1_DaemonSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_DaemonSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_DaemonSetStatus),
+        });
+    export let io_k8s_api_extensions_v1beta1_DaemonSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_DaemonSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_extensions_v1beta1_DaemonSetSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            revisionHistoryLimit: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+            templateGeneration: number().integer(),
+            updateStrategy: lazy(()=>io_k8s_api_extensions_v1beta1_DaemonSetUpdateStrategy),
+        });
+    export let io_k8s_api_extensions_v1beta1_DaemonSetUpdateStrategy: ObjectSchema = object({
+            rollingUpdate: lazy(()=>io_k8s_api_apps_v1_RollingUpdateDaemonSet),
+            type: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_Deployment: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_DeploymentSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_DeploymentStatus),
+        });
+    export let io_k8s_api_extensions_v1beta1_DeploymentList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_Deployment)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_extensions_v1beta1_DeploymentSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            paused: boolean(),
+            progressDeadlineSeconds: number().integer(),
+            replicas: number().integer(),
+            revisionHistoryLimit: number().integer(),
+            rollbackTo: lazy(()=>io_k8s_api_apps_v1beta1_RollbackConfig),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            strategy: lazy(()=>io_k8s_api_apps_v1_DeploymentStrategy),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+        });
+    export let io_k8s_api_extensions_v1beta1_FSGroupStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_HTTPIngressPath: ObjectSchema = object({
+            backend: lazy(()=>io_k8s_api_extensions_v1beta1_IngressBackend),
+            path: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_HTTPIngressRuleValue: ObjectSchema = object({
+            paths: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_HTTPIngressPath)),
+        });
+    export let io_k8s_api_extensions_v1beta1_HostPortRange: ObjectSchema = object({
+            max: number().integer(),
+            min: number().integer(),
+        });
+    export let io_k8s_api_extensions_v1beta1_IDRange: ObjectSchema = object({
+            max: number().integer(),
+            min: number().integer(),
+        });
+    export let io_k8s_api_extensions_v1beta1_IPBlock: ObjectSchema = object({
+            cidr: string(),
+            except: array().items(string()),
+        });
+    export let io_k8s_api_extensions_v1beta1_Ingress: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_IngressSpec),
+            status: lazy(()=>io_k8s_api_extensions_v1beta1_IngressStatus),
+        });
+    export let io_k8s_api_extensions_v1beta1_IngressBackend: ObjectSchema = object({
+            serviceName: string(),
+            servicePort: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_IngressList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_Ingress)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_extensions_v1beta1_IngressRule: ObjectSchema = object({
+            host: string(),
+            http: lazy(()=>io_k8s_api_extensions_v1beta1_HTTPIngressRuleValue),
+        });
+    export let io_k8s_api_extensions_v1beta1_IngressSpec: ObjectSchema = object({
+            backend: lazy(()=>io_k8s_api_extensions_v1beta1_IngressBackend),
+            rules: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_IngressRule)),
+            tls: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_IngressTLS)),
+        });
+    export let io_k8s_api_extensions_v1beta1_IngressStatus: ObjectSchema = object({
+            loadBalancer: lazy(()=>io_k8s_api_core_v1_LoadBalancerStatus),
+        });
+    export let io_k8s_api_extensions_v1beta1_IngressTLS: ObjectSchema = object({
+            hosts: array().items(string()),
+            secretName: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_NetworkPolicy: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicySpec),
+        });
+    export let io_k8s_api_extensions_v1beta1_NetworkPolicyEgressRule: ObjectSchema = object({
+            ports: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicyPort)),
+            to: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicyPeer)),
+        });
+    export let io_k8s_api_extensions_v1beta1_NetworkPolicyIngressRule: ObjectSchema = object({
+            from: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicyPeer)),
+            ports: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicyPort)),
+        });
+    export let io_k8s_api_extensions_v1beta1_NetworkPolicyList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicy)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_extensions_v1beta1_NetworkPolicyPeer: ObjectSchema = object({
+            ipBlock: lazy(()=>io_k8s_api_extensions_v1beta1_IPBlock),
+            namespaceSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            podSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+        });
+    export let io_k8s_api_extensions_v1beta1_NetworkPolicyPort: ObjectSchema = object({
+            port: string(),
+            protocol: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_NetworkPolicySpec: ObjectSchema = object({
+            egress: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicyEgressRule)),
+            ingress: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_NetworkPolicyIngressRule)),
+            podSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            policyTypes: array().items(string()),
+        });
+    export let io_k8s_api_extensions_v1beta1_PodSecurityPolicy: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_PodSecurityPolicySpec),
+        });
+    export let io_k8s_api_extensions_v1beta1_PodSecurityPolicyList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_PodSecurityPolicy)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_extensions_v1beta1_PodSecurityPolicySpec: ObjectSchema = object({
+            allowPrivilegeEscalation: boolean(),
+            allowedCSIDrivers: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_AllowedCSIDriver)),
+            allowedCapabilities: array().items(string()),
+            allowedFlexVolumes: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_AllowedFlexVolume)),
+            allowedHostPaths: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_AllowedHostPath)),
+            allowedProcMountTypes: array().items(string()),
+            allowedUnsafeSysctls: array().items(string()),
+            defaultAddCapabilities: array().items(string()),
+            defaultAllowPrivilegeEscalation: boolean(),
+            forbiddenSysctls: array().items(string()),
+            fsGroup: lazy(()=>io_k8s_api_extensions_v1beta1_FSGroupStrategyOptions),
+            hostIPC: boolean(),
+            hostNetwork: boolean(),
+            hostPID: boolean(),
+            hostPorts: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_HostPortRange)),
+            privileged: boolean(),
+            readOnlyRootFilesystem: boolean(),
+            requiredDropCapabilities: array().items(string()),
+            runAsGroup: lazy(()=>io_k8s_api_extensions_v1beta1_RunAsGroupStrategyOptions),
+            runAsUser: lazy(()=>io_k8s_api_extensions_v1beta1_RunAsUserStrategyOptions),
+            runtimeClass: lazy(()=>io_k8s_api_extensions_v1beta1_RuntimeClassStrategyOptions),
+            seLinux: lazy(()=>io_k8s_api_extensions_v1beta1_SELinuxStrategyOptions),
+            supplementalGroups: lazy(()=>io_k8s_api_extensions_v1beta1_SupplementalGroupsStrategyOptions),
+            volumes: array().items(string()),
+        });
+    export let io_k8s_api_extensions_v1beta1_ReplicaSet: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_ReplicaSetSpec),
+            status: lazy(()=>io_k8s_api_apps_v1_ReplicaSetStatus),
+        });
+    export let io_k8s_api_extensions_v1beta1_ReplicaSetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_ReplicaSet)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_extensions_v1beta1_ReplicaSetSpec: ObjectSchema = object({
+            minReadySeconds: number().integer(),
+            replicas: number().integer(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            template: lazy(()=>io_k8s_api_core_v1_PodTemplateSpec),
+        });
+    export let io_k8s_api_extensions_v1beta1_RunAsGroupStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_RunAsUserStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_RuntimeClassStrategyOptions: ObjectSchema = object({
+            allowedRuntimeClassNames: array().items(string()),
+            defaultRuntimeClassName: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_SELinuxStrategyOptions: ObjectSchema = object({
+            rule: string(),
+            seLinuxOptions: lazy(()=>io_k8s_api_core_v1_SELinuxOptions),
+        });
+    export let io_k8s_api_extensions_v1beta1_Scale: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_ScaleSpec),
+            status: lazy(()=>io_k8s_api_extensions_v1beta1_ScaleStatus),
+        });
+    export let io_k8s_api_extensions_v1beta1_ScaleSpec: ObjectSchema = object({
+            replicas: number().integer(),
+        });
+    export let io_k8s_api_extensions_v1beta1_ScaleStatus: ObjectSchema = object({
+            replicas: number().integer(),
+            selector: object({
+            }),
+            targetSelector: string(),
+        });
+    export let io_k8s_api_extensions_v1beta1_SupplementalGroupsStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_networking_v1_IPBlock: ObjectSchema = object({
+            cidr: string(),
+            except: array().items(string()),
+        });
+    export let io_k8s_api_networking_v1_NetworkPolicy: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_networking_v1_NetworkPolicySpec),
+        });
+    export let io_k8s_api_networking_v1_NetworkPolicyEgressRule: ObjectSchema = object({
+            ports: array().items(lazy(()=>io_k8s_api_networking_v1_NetworkPolicyPort)),
+            to: array().items(lazy(()=>io_k8s_api_networking_v1_NetworkPolicyPeer)),
+        });
+    export let io_k8s_api_networking_v1_NetworkPolicyIngressRule: ObjectSchema = object({
+            from: array().items(lazy(()=>io_k8s_api_networking_v1_NetworkPolicyPeer)),
+            ports: array().items(lazy(()=>io_k8s_api_networking_v1_NetworkPolicyPort)),
+        });
+    export let io_k8s_api_networking_v1_NetworkPolicyList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_networking_v1_NetworkPolicy)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_networking_v1_NetworkPolicyPeer: ObjectSchema = object({
+            ipBlock: lazy(()=>io_k8s_api_networking_v1_IPBlock),
+            namespaceSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            podSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+        });
+    export let io_k8s_api_networking_v1_NetworkPolicyPort: ObjectSchema = object({
+            port: string(),
+            protocol: string(),
+        });
+    export let io_k8s_api_networking_v1_NetworkPolicySpec: ObjectSchema = object({
+            egress: array().items(lazy(()=>io_k8s_api_networking_v1_NetworkPolicyEgressRule)),
+            ingress: array().items(lazy(()=>io_k8s_api_networking_v1_NetworkPolicyIngressRule)),
+            podSelector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            policyTypes: array().items(string()),
+        });
+    export let io_k8s_api_networking_v1beta1_Ingress: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_extensions_v1beta1_IngressSpec),
+            status: lazy(()=>io_k8s_api_extensions_v1beta1_IngressStatus),
+        });
+    export let io_k8s_api_networking_v1beta1_IngressList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_networking_v1beta1_Ingress)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_node_v1alpha1_RuntimeClass: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_node_v1alpha1_RuntimeClassSpec),
+        });
+    export let io_k8s_api_node_v1alpha1_RuntimeClassList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_node_v1alpha1_RuntimeClass)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_node_v1alpha1_RuntimeClassSpec: ObjectSchema = object({
+            runtimeHandler: string(),
+        });
+    export let io_k8s_api_node_v1beta1_RuntimeClass: ObjectSchema = object({
+            apiVersion: string(),
+            handler: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+        });
+    export let io_k8s_api_node_v1beta1_RuntimeClassList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_node_v1beta1_RuntimeClass)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_policy_v1beta1_AllowedFlexVolume: ObjectSchema = object({
+            driver: string(),
+        });
+    export let io_k8s_api_policy_v1beta1_AllowedHostPath: ObjectSchema = object({
+            pathPrefix: string(),
+            readOnly: boolean(),
+        });
+    export let io_k8s_api_policy_v1beta1_Eviction: ObjectSchema = object({
+            apiVersion: string(),
+            deleteOptions: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_DeleteOptions),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+        });
+    export let io_k8s_api_policy_v1beta1_FSGroupStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_policy_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_policy_v1beta1_HostPortRange: ObjectSchema = object({
+            max: number().integer(),
+            min: number().integer(),
+        });
+    export let io_k8s_api_policy_v1beta1_IDRange: ObjectSchema = object({
+            max: number().integer(),
+            min: number().integer(),
+        });
+    export let io_k8s_api_policy_v1beta1_PodDisruptionBudget: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_policy_v1beta1_PodDisruptionBudgetSpec),
+            status: lazy(()=>io_k8s_api_policy_v1beta1_PodDisruptionBudgetStatus),
+        });
+    export let io_k8s_api_policy_v1beta1_PodDisruptionBudgetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_policy_v1beta1_PodDisruptionBudget)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_policy_v1beta1_PodDisruptionBudgetSpec: ObjectSchema = object({
+            maxUnavailable: string(),
+            minAvailable: string(),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+        });
+    export let io_k8s_api_policy_v1beta1_PodDisruptionBudgetStatus: ObjectSchema = object({
+            currentHealthy: number().integer(),
+            desiredHealthy: number().integer(),
+            disruptedPods: object({
+            }),
+            disruptionsAllowed: number().integer(),
+            expectedPods: number().integer(),
+            observedGeneration: number().integer(),
+        });
+    export let io_k8s_api_policy_v1beta1_PodSecurityPolicy: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_policy_v1beta1_PodSecurityPolicySpec),
+        });
+    export let io_k8s_api_policy_v1beta1_PodSecurityPolicyList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_policy_v1beta1_PodSecurityPolicy)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_policy_v1beta1_PodSecurityPolicySpec: ObjectSchema = object({
+            allowPrivilegeEscalation: boolean(),
+            allowedCSIDrivers: array().items(lazy(()=>io_k8s_api_extensions_v1beta1_AllowedCSIDriver)),
+            allowedCapabilities: array().items(string()),
+            allowedFlexVolumes: array().items(lazy(()=>io_k8s_api_policy_v1beta1_AllowedFlexVolume)),
+            allowedHostPaths: array().items(lazy(()=>io_k8s_api_policy_v1beta1_AllowedHostPath)),
+            allowedProcMountTypes: array().items(string()),
+            allowedUnsafeSysctls: array().items(string()),
+            defaultAddCapabilities: array().items(string()),
+            defaultAllowPrivilegeEscalation: boolean(),
+            forbiddenSysctls: array().items(string()),
+            fsGroup: lazy(()=>io_k8s_api_policy_v1beta1_FSGroupStrategyOptions),
+            hostIPC: boolean(),
+            hostNetwork: boolean(),
+            hostPID: boolean(),
+            hostPorts: array().items(lazy(()=>io_k8s_api_policy_v1beta1_HostPortRange)),
+            privileged: boolean(),
+            readOnlyRootFilesystem: boolean(),
+            requiredDropCapabilities: array().items(string()),
+            runAsGroup: lazy(()=>io_k8s_api_policy_v1beta1_RunAsGroupStrategyOptions),
+            runAsUser: lazy(()=>io_k8s_api_policy_v1beta1_RunAsUserStrategyOptions),
+            runtimeClass: lazy(()=>io_k8s_api_extensions_v1beta1_RuntimeClassStrategyOptions),
+            seLinux: lazy(()=>io_k8s_api_policy_v1beta1_SELinuxStrategyOptions),
+            supplementalGroups: lazy(()=>io_k8s_api_policy_v1beta1_SupplementalGroupsStrategyOptions),
+            volumes: array().items(string()),
+        });
+    export let io_k8s_api_policy_v1beta1_RunAsGroupStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_policy_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_policy_v1beta1_RunAsUserStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_policy_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_policy_v1beta1_SELinuxStrategyOptions: ObjectSchema = object({
+            rule: string(),
+            seLinuxOptions: lazy(()=>io_k8s_api_core_v1_SELinuxOptions),
+        });
+    export let io_k8s_api_policy_v1beta1_SupplementalGroupsStrategyOptions: ObjectSchema = object({
+            ranges: array().items(lazy(()=>io_k8s_api_policy_v1beta1_IDRange)),
+            rule: string(),
+        });
+    export let io_k8s_api_rbac_v1_AggregationRule: ObjectSchema = object({
+            clusterRoleSelectors: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector)),
+        });
+    export let io_k8s_api_rbac_v1_ClusterRole: ObjectSchema = object({
+            aggregationRule: lazy(()=>io_k8s_api_rbac_v1_AggregationRule),
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            rules: array().items(lazy(()=>io_k8s_api_rbac_v1_PolicyRule)),
+        });
+    export let io_k8s_api_rbac_v1_ClusterRoleBinding: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            roleRef: lazy(()=>io_k8s_api_rbac_v1_RoleRef),
+            subjects: array().items(lazy(()=>io_k8s_api_rbac_v1_Subject)),
+        });
+    export let io_k8s_api_rbac_v1_ClusterRoleBindingList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1_ClusterRoleBinding)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1_ClusterRoleList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1_ClusterRole)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1_PolicyRule: ObjectSchema = object({
+            apiGroups: array().items(string()),
+            nonResourceURLs: array().items(string()),
+            resourceNames: array().items(string()),
+            resources: array().items(string()),
+            verbs: array().items(string()),
+        });
+    export let io_k8s_api_rbac_v1_Role: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            rules: array().items(lazy(()=>io_k8s_api_rbac_v1_PolicyRule)),
+        });
+    export let io_k8s_api_rbac_v1_RoleBinding: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            roleRef: lazy(()=>io_k8s_api_rbac_v1_RoleRef),
+            subjects: array().items(lazy(()=>io_k8s_api_rbac_v1_Subject)),
+        });
+    export let io_k8s_api_rbac_v1_RoleBindingList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1_RoleBinding)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1_RoleList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1_Role)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1_RoleRef: ObjectSchema = object({
+            apiGroup: string(),
+            kind: string(),
+            name: string(),
+        });
+    export let io_k8s_api_rbac_v1_Subject: ObjectSchema = object({
+            apiGroup: string(),
+            kind: string(),
+            name: string(),
+            namespace: string(),
+        });
+    export let io_k8s_api_rbac_v1alpha1_ClusterRole: ObjectSchema = object({
+            aggregationRule: lazy(()=>io_k8s_api_rbac_v1_AggregationRule),
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            rules: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_PolicyRule)),
+        });
+    export let io_k8s_api_rbac_v1alpha1_ClusterRoleBinding: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            roleRef: lazy(()=>io_k8s_api_rbac_v1_RoleRef),
+            subjects: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_Subject)),
+        });
+    export let io_k8s_api_rbac_v1alpha1_ClusterRoleBindingList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_ClusterRoleBinding)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1alpha1_ClusterRoleList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_ClusterRole)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1alpha1_PolicyRule: ObjectSchema = object({
+            apiGroups: array().items(string()),
+            nonResourceURLs: array().items(string()),
+            resourceNames: array().items(string()),
+            resources: array().items(string()),
+            verbs: array().items(string()),
+        });
+    export let io_k8s_api_rbac_v1alpha1_Role: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            rules: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_PolicyRule)),
+        });
+    export let io_k8s_api_rbac_v1alpha1_RoleBinding: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            roleRef: lazy(()=>io_k8s_api_rbac_v1_RoleRef),
+            subjects: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_Subject)),
+        });
+    export let io_k8s_api_rbac_v1alpha1_RoleBindingList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_RoleBinding)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1alpha1_RoleList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1alpha1_Role)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1alpha1_Subject: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            name: string(),
+            namespace: string(),
+        });
+    export let io_k8s_api_rbac_v1beta1_ClusterRole: ObjectSchema = object({
+            aggregationRule: lazy(()=>io_k8s_api_rbac_v1_AggregationRule),
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            rules: array().items(lazy(()=>io_k8s_api_rbac_v1beta1_PolicyRule)),
+        });
+    export let io_k8s_api_rbac_v1beta1_ClusterRoleList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1beta1_ClusterRole)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_rbac_v1beta1_PolicyRule: ObjectSchema = object({
+            apiGroups: array().items(string()),
+            nonResourceURLs: array().items(string()),
+            resourceNames: array().items(string()),
+            resources: array().items(string()),
+            verbs: array().items(string()),
+        });
+    export let io_k8s_api_rbac_v1beta1_Role: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            rules: array().items(lazy(()=>io_k8s_api_rbac_v1beta1_PolicyRule)),
+        });
+    export let io_k8s_api_rbac_v1beta1_RoleList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_rbac_v1beta1_Role)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_scheduling_v1_PriorityClass: ObjectSchema = object({
+            apiVersion: string(),
+            description: string(),
+            globalDefault: boolean(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            value: number().integer(),
+        });
+    export let io_k8s_api_scheduling_v1_PriorityClassList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_scheduling_v1_PriorityClass)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_scheduling_v1alpha1_PriorityClass: ObjectSchema = object({
+            apiVersion: string(),
+            description: string(),
+            globalDefault: boolean(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            value: number().integer(),
+        });
+    export let io_k8s_api_scheduling_v1alpha1_PriorityClassList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_scheduling_v1alpha1_PriorityClass)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_settings_v1alpha1_PodPreset: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_settings_v1alpha1_PodPresetSpec),
+        });
+    export let io_k8s_api_settings_v1alpha1_PodPresetList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_settings_v1alpha1_PodPreset)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_settings_v1alpha1_PodPresetSpec: ObjectSchema = object({
+            env: array().items(lazy(()=>io_k8s_api_core_v1_EnvVar)),
+            envFrom: array().items(lazy(()=>io_k8s_api_core_v1_EnvFromSource)),
+            selector: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector),
+            volumeMounts: array().items(lazy(()=>io_k8s_api_core_v1_VolumeMount)),
+            volumes: array().items(lazy(()=>io_k8s_api_core_v1_Volume)),
+        });
+    export let io_k8s_api_storage_v1_StorageClass: ObjectSchema = object({
+            allowVolumeExpansion: boolean(),
+            allowedTopologies: array().items(lazy(()=>io_k8s_api_core_v1_TopologySelectorTerm)),
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            mountOptions: array().items(string()),
+            parameters: object({
+            }),
+            provisioner: string(),
+            reclaimPolicy: string(),
+            volumeBindingMode: string(),
+        });
+    export let io_k8s_api_storage_v1_StorageClassList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_storage_v1_StorageClass)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_storage_v1_VolumeAttachment: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_storage_v1_VolumeAttachmentSpec),
+            status: lazy(()=>io_k8s_api_storage_v1_VolumeAttachmentStatus),
+        });
+    export let io_k8s_api_storage_v1_VolumeAttachmentList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_storage_v1_VolumeAttachment)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_storage_v1_VolumeAttachmentSource: ObjectSchema = object({
+            persistentVolumeName: string(),
+        });
+    export let io_k8s_api_storage_v1_VolumeAttachmentSpec: ObjectSchema = object({
+            attacher: string(),
+            nodeName: string(),
+            source: lazy(()=>io_k8s_api_storage_v1_VolumeAttachmentSource),
+        });
+    export let io_k8s_api_storage_v1_VolumeAttachmentStatus: ObjectSchema = object({
+            attachError: lazy(()=>io_k8s_api_storage_v1_VolumeError),
+            attached: boolean(),
+            attachmentMetadata: object({
+            }),
+            detachError: lazy(()=>io_k8s_api_storage_v1_VolumeError),
+        });
+    export let io_k8s_api_storage_v1_VolumeError: ObjectSchema = object({
+            message: string(),
+            time: string(),
+        });
+    export let io_k8s_api_storage_v1alpha1_VolumeAttachment: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_storage_v1_VolumeAttachmentSpec),
+            status: lazy(()=>io_k8s_api_storage_v1alpha1_VolumeAttachmentStatus),
+        });
+    export let io_k8s_api_storage_v1alpha1_VolumeAttachmentList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_storage_v1alpha1_VolumeAttachment)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_storage_v1alpha1_VolumeAttachmentStatus: ObjectSchema = object({
+            attachError: lazy(()=>io_k8s_api_storage_v1alpha1_VolumeError),
+            attached: boolean(),
+            attachmentMetadata: object({
+            }),
+            detachError: lazy(()=>io_k8s_api_storage_v1alpha1_VolumeError),
+        });
+    export let io_k8s_api_storage_v1alpha1_VolumeError: ObjectSchema = object({
+            message: string(),
+            time: string(),
+        });
+    export let io_k8s_api_storage_v1beta1_CSIDriver: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_storage_v1beta1_CSIDriverSpec),
+        });
+    export let io_k8s_api_storage_v1beta1_CSIDriverList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_storage_v1beta1_CSIDriver)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_storage_v1beta1_CSIDriverSpec: ObjectSchema = object({
+            attachRequired: boolean(),
+            podInfoOnMount: boolean(),
+        });
+    export let io_k8s_api_storage_v1beta1_CSINode: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_api_storage_v1beta1_CSINodeSpec),
+        });
+    export let io_k8s_api_storage_v1beta1_CSINodeDriver: ObjectSchema = object({
+            name: string(),
+            nodeID: string(),
+            topologyKeys: array().items(string()),
+        });
+    export let io_k8s_api_storage_v1beta1_CSINodeList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_api_storage_v1beta1_CSINode)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_api_storage_v1beta1_CSINodeSpec: ObjectSchema = object({
+            drivers: array().items(lazy(()=>io_k8s_api_storage_v1beta1_CSINodeDriver)),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceColumnDefinition: ObjectSchema = object({
+            JSONPath: string(),
+            description: string(),
+            format: string(),
+            name: string(),
+            priority: number().integer(),
+            type: string(),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceConversion: ObjectSchema = object({
+            conversionReviewVersions: array().items(string()),
+            strategy: string(),
+            webhookClientConfig: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_WebhookClientConfig),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinition: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionSpec),
+            status: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionStatus),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinition)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionNames: ObjectSchema = object({
+            categories: array().items(string()),
+            kind: string(),
+            listKind: string(),
+            plural: string(),
+            shortNames: array().items(string()),
+            singular: string(),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionSpec: ObjectSchema = object({
+            additionalPrinterColumns: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceColumnDefinition)),
+            conversion: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceConversion),
+            group: string(),
+            names: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionNames),
+            preserveUnknownFields: boolean(),
+            scope: string(),
+            subresources: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceSubresources),
+            validation: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceValidation),
+            version: string(),
+            versions: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionVersion)),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionStatus: ObjectSchema = object({
+            acceptedNames: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionNames),
+            conditions: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionCondition)),
+            storedVersions: array().items(string()),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceDefinitionVersion: ObjectSchema = object({
+            additionalPrinterColumns: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceColumnDefinition)),
+            name: string(),
+            schema: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceValidation),
+            served: boolean(),
+            storage: boolean(),
+            subresources: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceSubresources),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceSubresourceScale: ObjectSchema = object({
+            labelSelectorPath: string(),
+            specReplicasPath: string(),
+            statusReplicasPath: string(),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceSubresources: ObjectSchema = object({
+            scale: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceSubresourceScale),
+            status: object({
+            }),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_CustomResourceValidation: ObjectSchema = object({
+            openAPIV3Schema: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_ExternalDocumentation: ObjectSchema = object({
+            description: string(),
+            url: string(),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps: ObjectSchema = object({
+            $schema: string(),
+            additionalItems: object({
+            }),
+            additionalProperties: object({
+            }),
+            allOf: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps)),
+            anyOf: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps)),
+            default: object({
+            }),
+            definitions: object({
+            }),
+            dependencies: object({
+            }),
+            description: string(),
+            enum: array().items(object({
+            })),
+            example: object({
+            }),
+            exclusiveMaximum: boolean(),
+            exclusiveMinimum: boolean(),
+            externalDocs: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_ExternalDocumentation),
+            format: string(),
+            id: string(),
+            items: object({
+            }),
+            maxItems: number().integer(),
+            maxLength: number().integer(),
+            maxProperties: number().integer(),
+            maximum: number(),
+            minItems: number().integer(),
+            minLength: number().integer(),
+            minProperties: number().integer(),
+            minimum: number(),
+            multipleOf: number(),
+            not: lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps),
+            nullable: boolean(),
+            oneOf: array().items(lazy(()=>io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_JSONSchemaProps)),
+            pattern: string(),
+            patternProperties: object({
+            }),
+            properties: object({
+            }),
+            required: array().items(string()),
+            title: string(),
+            type: string(),
+            uniqueItems: boolean(),
+            x_kubernetes_embedded_resource: boolean(),
+            x_kubernetes_int_or_string: boolean(),
+            x_kubernetes_preserve_unknown_fields: boolean(),
+        });
+    export let io_k8s_apiextensions_apiserver_pkg_apis_apiextensions_v1beta1_WebhookClientConfig: ObjectSchema = object({
+            caBundle: string(),
+            service: lazy(()=>io_k8s_api_admissionregistration_v1beta1_ServiceReference),
+            url: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_APIGroup: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            name: string(),
+            preferredVersion: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_GroupVersionForDiscovery),
+            serverAddressByClientCIDRs: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ServerAddressByClientCIDR)),
+            versions: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_GroupVersionForDiscovery)),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_APIGroupList: ObjectSchema = object({
+            apiVersion: string(),
+            groups: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_APIGroup)),
+            kind: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_APIResource: ObjectSchema = object({
+            categories: array().items(string()),
+            group: string(),
+            kind: string(),
+            name: string(),
+            namespaced: boolean(),
+            shortNames: array().items(string()),
+            singularName: string(),
+            storageVersionHash: string(),
+            verbs: array().items(string()),
+            version: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_APIResourceList: ObjectSchema = object({
+            apiVersion: string(),
+            groupVersion: string(),
+            kind: string(),
+            resources: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_APIResource)),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_APIVersions: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            serverAddressByClientCIDRs: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ServerAddressByClientCIDR)),
+            versions: array().items(string()),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_DeleteOptions: ObjectSchema = object({
+            apiVersion: string(),
+            dryRun: array().items(string()),
+            gracePeriodSeconds: number().integer(),
+            kind: string(),
+            orphanDependents: boolean(),
+            preconditions: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_Preconditions),
+            propagationPolicy: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_GroupVersionForDiscovery: ObjectSchema = object({
+            groupVersion: string(),
+            version: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_Initializer: ObjectSchema = object({
+            name: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_Initializers: ObjectSchema = object({
+            pending: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_Initializer)),
+            result: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_Status),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelector: ObjectSchema = object({
+            matchExpressions: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelectorRequirement)),
+            matchLabels: object({
+            }),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_LabelSelectorRequirement: ObjectSchema = object({
+            key: string(),
+            operator: string(),
+            values: array().items(string()),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta: ObjectSchema = object({
+            continue: string(),
+            remainingItemCount: number().integer(),
+            resourceVersion: string(),
+            selfLink: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_ManagedFieldsEntry: ObjectSchema = object({
+            apiVersion: string(),
+            fields: object({
+            }),
+            manager: string(),
+            operation: string(),
+            time: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta: ObjectSchema = object({
+            annotations: object({
+            }),
+            clusterName: string(),
+            creationTimestamp: string(),
+            deletionGracePeriodSeconds: number().integer(),
+            deletionTimestamp: string(),
+            finalizers: array().items(string()),
+            generateName: string(),
+            generation: number().integer(),
+            initializers: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_Initializers),
+            labels: object({
+            }),
+            managedFields: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ManagedFieldsEntry)),
+            name: string(),
+            namespace: string(),
+            ownerReferences: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_OwnerReference)),
+            resourceVersion: string(),
+            selfLink: string(),
+            uid: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_OwnerReference: ObjectSchema = object({
+            apiVersion: string(),
+            blockOwnerDeletion: boolean(),
+            controller: boolean(),
+            kind: string(),
+            name: string(),
+            uid: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_Preconditions: ObjectSchema = object({
+            resourceVersion: string(),
+            uid: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_ServerAddressByClientCIDR: ObjectSchema = object({
+            clientCIDR: string(),
+            serverAddress: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_Status: ObjectSchema = object({
+            apiVersion: string(),
+            code: number().integer(),
+            details: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_StatusDetails),
+            kind: string(),
+            message: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+            reason: string(),
+            status: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_StatusCause: ObjectSchema = object({
+            field: string(),
+            message: string(),
+            reason: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_StatusDetails: ObjectSchema = object({
+            causes: array().items(lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_StatusCause)),
+            group: string(),
+            kind: string(),
+            name: string(),
+            retryAfterSeconds: number().integer(),
+            uid: string(),
+        });
+    export let io_k8s_apimachinery_pkg_apis_meta_v1_WatchEvent: ObjectSchema = object({
+            object: lazy(()=>io_k8s_apimachinery_pkg_runtime_RawExtension),
+            type: string(),
+        });
+    export let io_k8s_apimachinery_pkg_runtime_RawExtension: ObjectSchema = object({
+            Raw: string(),
+        });
+    export let io_k8s_apimachinery_pkg_version_Info: ObjectSchema = object({
+            buildDate: string(),
+            compiler: string(),
+            gitCommit: string(),
+            gitTreeState: string(),
+            gitVersion: string(),
+            goVersion: string(),
+            major: string(),
+            minor: string(),
+            platform: string(),
+        });
+    export let io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIService: ObjectSchema = object({
+            apiVersion: string(),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ObjectMeta),
+            spec: lazy(()=>io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIServiceSpec),
+            status: lazy(()=>io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIServiceStatus),
+        });
+    export let io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIServiceCondition: ObjectSchema = object({
+            lastTransitionTime: string(),
+            message: string(),
+            reason: string(),
+            status: string(),
+            type: string(),
+        });
+    export let io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIServiceList: ObjectSchema = object({
+            apiVersion: string(),
+            items: array().items(lazy(()=>io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIService)),
+            kind: string(),
+            metadata: lazy(()=>io_k8s_apimachinery_pkg_apis_meta_v1_ListMeta),
+        });
+    export let io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIServiceSpec: ObjectSchema = object({
+            caBundle: string(),
+            group: string(),
+            groupPriorityMinimum: number().integer(),
+            insecureSkipTLSVerify: boolean(),
+            service: lazy(()=>io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_ServiceReference),
+            version: string(),
+            versionPriority: number().integer(),
+        });
+    export let io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIServiceStatus: ObjectSchema = object({
+            conditions: array().items(lazy(()=>io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_APIServiceCondition)),
+        });
+    export let io_k8s_kube_aggregator_pkg_apis_apiregistration_v1_ServiceReference: ObjectSchema = object({
+            name: string(),
+            namespace: string(),
+            port: number().integer(),
+        });
+}

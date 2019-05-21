@@ -4,7 +4,7 @@ import { Project } from 'ts-morph';
 import { expect } from 'chai';
 import { getOpenAPIConfig } from '../src/plugins/openapi/openapi';
 import { TypeMap } from '../src/plugins/openapi/type-map';
-let fs = require('fs');
+import { readFile } from './utils';
 
 describe('generate interface', function() {
     async function createSourceFile(file: string): Promise<string> {
@@ -14,10 +14,6 @@ describe('generate interface', function() {
         let typeBuilder = new TypeBuilder(config, new TypeMap(config));
         source.set({ statements: [typeBuilder.createTypings()] });
         return source.getFullText();
-    }
-
-    function readFile(file: string) {
-        return fs.readFileSync(file, { encoding: 'utf-8' });
     }
 
     it('should create multiple types', async function() {

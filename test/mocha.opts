@@ -3,4 +3,3 @@
 --recursive
 --reporter spec
 --timeout 50000
---compilers ts:ts-node/register

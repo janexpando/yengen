@@ -22,7 +22,23 @@ export class JoiSchemaBuilder {
             {
                 kind: StructureKind.ImportDeclaration,
                 moduleSpecifier: 'joi',
-                defaultImport: '* as joi'
+                namedImports: [
+                    'ObjectSchema',
+                    'ArraySchema',
+                    'AnySchema',
+                    'BooleanSchema',
+                    'BinarySchema',
+                    'DateSchema',
+                    'NumberSchema',
+                    'StringSchema',
+                    'lazy',
+                    'array',
+                    'object',
+                    'boolean',
+                    'number',
+                    'string',
+                    'any'
+                ]
             },
             {
                 kind: StructureKind.Namespace,
@@ -36,30 +52,30 @@ export class JoiSchemaBuilder {
     private getJoiSchemaType(
         schema: OpenAPIV3.SchemaObject
     ):
-        | 'joi.ObjectSchema'
-        | 'joi.ArraySchema'
-        | 'joi.AnySchema'
-        | 'joi.BooleanSchema'
-        | 'joi.BinarySchema'
-        | 'joi.DateSchema'
-        | 'joi.NumberSchema'
-        | 'joi.StringSchema' {
+        | 'ObjectSchema'
+        | 'ArraySchema'
+        | 'AnySchema'
+        | 'BooleanSchema'
+        | 'BinarySchema'
+        | 'DateSchema'
+        | 'NumberSchema'
+        | 'StringSchema' {
         switch (schema.type) {
             case 'string':
-                return 'joi.StringSchema';
+                return 'StringSchema';
             case 'number':
-                return 'joi.NumberSchema';
+                return 'NumberSchema';
             case 'integer':
-                return 'joi.NumberSchema';
+                return 'NumberSchema';
             case 'boolean':
-                return 'joi.BooleanSchema';
+                return 'BooleanSchema';
             case 'object':
-                return 'joi.ObjectSchema';
+                return 'ObjectSchema';
             case 'array':
-                return 'joi.ArraySchema';
+                return 'ArraySchema';
             case 'null':
             default:
-                return 'joi.AnySchema';
+                return 'AnySchema';
         }
     }
 
@@ -83,11 +99,14 @@ export class JoiSchemaBuilder {
     private schemaWriter(schema: OpenAPIV3.SchemaObject, skipTypeMap?: boolean): WriterFunction {
         return writer => {
             if (!skipTypeMap && this.typeMap.has(schema)) {
-                return writer.write(sanitizeName(this.typeMap.get(schema)));
+                return writer
+                    .write('lazy(()=>')
+                    .write(sanitizeName(this.typeMap.get(schema)))
+                    .write(')');
             }
             switch (schema.type) {
                 case 'array':
-                    writer.write('joi.array()');
+                    writer.write('array()');
                     if (schema.items) {
                         writer.write('.items(');
                         this.schemaWriter(schema.items)(writer);
@@ -96,7 +115,7 @@ export class JoiSchemaBuilder {
                     return;
                 case 'object':
                     writer
-                        .write('joi.object(')
+                        .write('object(')
                         .inlineBlock(() => {
                             _.forOwn(schema.properties, (schema, name) => {
                                 writer.write(sanitizeName(name)).write(': ');
@@ -108,21 +127,16 @@ export class JoiSchemaBuilder {
 
                     return;
                 case 'boolean':
-                    // language=TypeScript
-                    return writer.write('joi.boolean()');
+                    return writer.write('boolean()');
                 case 'integer':
-                    // language=TypeScript
-                    return writer.write('joi.number().integer()');
+                    return writer.write('number().integer()');
                 case 'number':
-                    // language=TypeScript
-                    return writer.write('joi.number()');
+                    return writer.write('number()');
                 case 'string':
-                    // language=TypeScript
-                    return writer.write('joi.string()');
+                    return writer.write('string()');
                 case 'null':
                 default:
-                    // language=TypeScript
-                    return writer.write('joi.any()');
+                    return writer.write('any()');
             }
         };
     }
