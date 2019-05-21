@@ -1,5 +1,5 @@
-import { attempt, object, string } from 'joi';
-import { SourceFile } from 'ts-morph';
+import { attempt, boolean, object, string } from 'joi';
+import { SourceFile, StatementStructures } from 'ts-morph';
 import * as tm from 'ts-morph';
 import { CodegenPlugin, Context, PluginResult } from '../../pipeline';
 import { JoiSchemaBuilder } from './joi-schema-builder';
@@ -11,11 +11,17 @@ import { TypeMap } from './type-map';
 export interface OpenapiPluginConfig {
     openapiFile: string;
     typingsFile: string;
+    joiSchemasFile: string;
+    createTypings: boolean;
+    createJoiSchemas: boolean;
 }
 
 const configSchema = object({
     openapiFile: string().default('./openapi.yml'),
-    typingsFile: string().default('./src/openapi/generated.ts')
+    typingsFile: string().default('./src/openapi/generated.ts'),
+    joiSchemasFile: string().default('./src/openapi/generated.ts'),
+    createTypings: boolean().default(true),
+    createJoiSchemas: boolean().default(true)
 });
 
 export class OpenapiPlugin implements CodegenPlugin {
@@ -28,13 +34,20 @@ export class OpenapiPlugin implements CodegenPlugin {
         let source: SourceFile = project.createSourceFile(this.config.typingsFile, '', {
             overwrite: true
         });
+        const statements: StatementStructures[] = [];
+
         let config: OpenAPIV3.Document = await getOpenAPIConfig(this.config.openapiFile);
         let typeMap = new TypeMap(config);
-        let builder = new TypeBuilder(config, typeMap);
-        let joiBuilder = new JoiSchemaBuilder(config, typeMap);
-        let typesNamespace = builder.createTypings();
-        let joiStatements = joiBuilder.createJoiSchemas();
-        source.set({ statements: [typesNamespace,...joiStatements] });
+        if (this.config.createTypings) {
+            let builder = new TypeBuilder(config, typeMap);
+            statements.push(builder.createTypings());
+        }
+        if (this.config.createJoiSchemas) {
+            let joiBuilder = new JoiSchemaBuilder(config, typeMap);
+            let joiStatements = joiBuilder.createJoiSchemas();
+            statements.push(...joiStatements);
+        }
+        source.set({ statements });
         context.command.log('Emiting source file to ', this.config.typingsFile);
         await project.save();
         return { ok: true };

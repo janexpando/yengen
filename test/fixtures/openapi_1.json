@@ -4,7 +4,75 @@
         "version": "0.0.1",
         "title": "Sample application"
     },
-    "paths": {},
+    "paths": {
+        "/products": {
+            "get": {
+                "responses": {
+                    "default": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "get all products"
+                    }
+                }
+            },
+            "post": {
+                "responses": {
+                    "default": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        },
+                        "description": "create new product"
+                    }
+                }
+            }
+        },
+        "/product/{sku}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "sku",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "responses": {
+                    "default": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        },
+                        "description": "get one product by sku"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "default": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
     "components": {
         "schemas": {
             "Product": {
