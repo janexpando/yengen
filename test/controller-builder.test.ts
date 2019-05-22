@@ -14,7 +14,6 @@ describe('ControllerBuilder', function() {
     }
     it('should generate something', async function() {
         let result = await createSourceFile('test/fixtures/openapi_1.json');
-        console.log(result);
         fs.writeFileSync('./.garbage/opeanapi_1.ts', result, { encoding: 'utf-8' });
     });
 });
