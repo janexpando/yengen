@@ -31,6 +31,7 @@ USAGE
 <!-- commands -->
 * [`yengen generate [FILE]`](#yengen-generate-file)
 * [`yengen help [COMMAND]`](#yengen-help-command)
+* [`yengen new:project [FILE]`](#yengen-newproject-file)
 
 ## `yengen generate [FILE]`
 
@@ -64,6 +65,22 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.6/src/commands/help.ts)_
+
+## `yengen new:project [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ yengen new:project [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/new/project.ts](https://github.com/janexpando/yengen/blob/v0.0.0/src/commands/new/project.ts)_
 <!-- commandsstop -->
 
 #TODO:
