@@ -68,7 +68,6 @@
     "repository": "janexpando/yengen",
     "scripts": {
         "postpack": "rm -f oclif.manifest.json",
-        "posttest": "tslint -p test -t stylish",
         "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
         "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
         "test:watch": "mocha -w",
