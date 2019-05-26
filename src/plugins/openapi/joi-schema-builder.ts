@@ -11,13 +11,19 @@ import { sanitizeName } from './utils';
 import _ = require('lodash');
 
 export class JoiSchemaBuilder {
-    constructor(private document: OpenAPIV3.Document, private typeMap: TypeMap) {}
+    constructor(
+        private document: OpenAPIV3.Document,
+        private typeMap: TypeMap
+    ) {}
 
     createJoiSchemas(): StatementStructures[] {
         let result: StatementStructures[] = [];
-        _.forOwn(this.document.components!.schemas, (schema: OpenAPIV3.SchemaObject, name) => {
-            result.push(this.createJoiSchema(name, schema));
-        });
+        _.forOwn(
+            this.document.components!.schemas,
+            (schema: OpenAPIV3.SchemaObject, name) => {
+                result.push(this.createJoiSchema(name, schema));
+            }
+        );
         return [
             {
                 kind: StructureKind.ImportDeclaration,
@@ -90,26 +96,32 @@ export class JoiSchemaBuilder {
                 {
                     name: sanitizeName(name),
                     type: this.getJoiSchemaType(schema),
-                    initializer: this.schemaWriter(schema, true)
+                    initializer: this.getSchemaWriter(schema, true)
                 }
             ]
         };
     }
 
-    private schemaWriter(schema: OpenAPIV3.SchemaObject, skipTypeMap?: boolean): WriterFunction {
+    getSchemaWriter(
+        schema: OpenAPIV3.SchemaObject,
+        skipTypeMap?: boolean,
+        useNamespace?: string
+    ): WriterFunction {
         return writer => {
             if (!skipTypeMap && this.typeMap.has(schema)) {
-                return writer
-                    .write('lazy(()=>')
-                    .write(sanitizeName(this.typeMap.get(schema)))
-                    .write(')');
+                writer.write('lazy(()=>');
+                if (useNamespace) writer.write(`${useNamespace}.`);
+                writer.write(sanitizeName(this.typeMap.get(schema))).write(')');
+                return;
             }
             switch (schema.type) {
                 case 'array':
                     writer.write('array()');
                     if (schema.items) {
                         writer.write('.items(');
-                        this.schemaWriter(schema.items)(writer);
+                        this.getSchemaWriter(schema.items, false, useNamespace)(
+                            writer
+                        );
                         writer.write(')');
                     }
                     return;
@@ -119,7 +131,11 @@ export class JoiSchemaBuilder {
                         .inlineBlock(() => {
                             _.forOwn(schema.properties, (schema, name) => {
                                 writer.write(sanitizeName(name)).write(': ');
-                                this.schemaWriter(schema)(writer);
+                                this.getSchemaWriter(
+                                    schema,
+                                    false,
+                                    useNamespace
+                                )(writer);
                                 writer.write(',').newLine();
                             });
                         })

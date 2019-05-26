@@ -8,10 +8,13 @@ import {
     StructureKind,
     WriterFunction
 } from 'ts-morph';
+import { JoiSchemaBuilder } from './joi-schema-builder';
 import { OpenAPIV3 } from './openapi-types';
 import { TypeBuilder } from './type-builder';
 import _ = require('lodash');
 import ParameterObject = OpenAPIV3.ParameterObject;
+import RequestBodyObject = OpenAPIV3.RequestBodyObject;
+import MediaTypeObject = OpenAPIV3.MediaTypeObject;
 
 type HttpOperation = 'get' | 'put' | 'post' | 'delete' | 'options' | 'head' | 'patch' | 'trace';
 const HTTP_OPERATIONS: HttpOperation[] = [
@@ -25,7 +28,11 @@ const HTTP_OPERATIONS: HttpOperation[] = [
     'trace'
 ];
 export class ControllerBuilder {
-    constructor(private document: OpenAPIV3.Document, private typeBuilder: TypeBuilder) {}
+    constructor(
+        private document: OpenAPIV3.Document,
+        private typeBuilder: TypeBuilder,
+        private joiSchemaBuilder: JoiSchemaBuilder
+    ) {}
 
     createControllers(): StatementStructures[] {
         const statements: StatementStructures[] = [];
@@ -44,6 +51,7 @@ export class ControllerBuilder {
                 defaultImport: '* as koa'
             },
             this.typeBuilder.createTypings(),
+            ...this.joiSchemaBuilder.createJoiSchemas(),
             {
                 kind: StructureKind.Namespace,
                 name: 'KoaControllers',
@@ -79,6 +87,17 @@ export class ControllerBuilder {
         }
         return result;
     }
+
+    getRequetsBodyContentSchema(rbo: RequestBodyObject | undefined): MediaTypeObject | null {
+        if (!rbo || !rbo.content) return null;
+        let keys = Object.keys(rbo.content);
+        if (keys.length == 0) {
+            return null;
+        }
+        let media: OpenAPIV3.MediaTypeObject = rbo.content[keys[0]];
+        return media || null;
+    }
+
     private createRouteContextType(
         path: string,
         method: HttpOperation,
@@ -130,15 +149,7 @@ export class ControllerBuilder {
             hasQuestionToken: operation.requestBody && !operation.requestBody.required,
             name: 'body',
             type: writer => {
-                if (!operation.requestBody || !operation.requestBody.content) {
-                    return writer.write('undefined');
-                }
-                let content = operation.requestBody.content;
-                let keys = Object.keys(content);
-                if (keys.length == 0) {
-                    return writer.write('undefined');
-                }
-                let media: OpenAPIV3.MediaTypeObject = content[keys[0]];
+                let media = this.getRequetsBodyContentSchema(operation.requestBody);
                 if (media && media.schema) {
                     this.typeBuilder.createTypeLiteral(media.schema, 'ApiSchemas')(writer);
                 } else {
@@ -256,14 +267,34 @@ export class ControllerBuilder {
                     .write(method)
                     .write('",')
                     .newLine()
-                    .write('validate: ')
-                    .inlineBlock()
+                    .write('validate: ');
+                this.writeValidate(writer, path, pathItem, method);
+                writer
                     .write(',')
                     .newLine()
                     .write('handler: ')
                     .write(`<any>this.handle${pascalCase(method)}.bind(this)`);
             })
             .write(')');
+    }
+
+    private writeValidate(
+        writer: CodeBlockWriter,
+        path: string,
+        pathItem: OpenAPIV3.PathItemObject,
+        method: HttpOperation
+    ) {
+        writer.inlineBlock(() => {
+            if (pathItem[method]!.requestBody) {
+                let media = this.getRequetsBodyContentSchema(pathItem[method]!.requestBody);
+                if (media && media.schema) {
+                    writer.write('body: ');
+                    this.joiSchemaBuilder.getSchemaWriter(media.schema, false, 'JoiSchemas')(
+                        writer
+                    );
+                }
+            }
+        });
     }
 
     private writeRouter(writer: CodeBlockWriter, path: string, pathItem: OpenAPIV3.PathItemObject) {

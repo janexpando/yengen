@@ -22,11 +22,11 @@
       <option name="IMPORT_SORT_MODULE_NAME" value="true" />
     </TypeScriptCodeStyleSettings>
     <codeStyleSettings language="JavaScript">
-      <option name="SOFT_MARGINS" value="100" />
+      <option name="SOFT_MARGINS" value="80" />
     </codeStyleSettings>
     <codeStyleSettings language="TypeScript">
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
-      <option name="SOFT_MARGINS" value="100" />
+      <option name="SOFT_MARGINS" value="80" />
     </codeStyleSettings>
   </code_scheme>
 </component>
