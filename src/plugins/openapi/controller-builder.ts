@@ -11,6 +11,7 @@ import {
 import { OpenAPIV3 } from './openapi-types';
 import { TypeBuilder } from './type-builder';
 import _ = require('lodash');
+import ParameterObject = OpenAPIV3.ParameterObject;
 
 type HttpOperation = 'get' | 'put' | 'post' | 'delete' | 'options' | 'head' | 'patch' | 'trace';
 const HTTP_OPERATIONS: HttpOperation[] = [
@@ -71,46 +72,79 @@ export class ControllerBuilder {
             })
             .join('');
     }
-
+    private joinParameters(...listOfLists: (ParameterObject[] | undefined)[]): ParameterObject[] {
+        let result: ParameterObject[] = [];
+        for (let parameters of listOfLists) {
+            if (parameters) result.push(...parameters);
+        }
+        return result;
+    }
     private createRouteContextType(
         path: string,
         method: HttpOperation,
         pathItem: OpenAPIV3.PathItemObject
     ): InterfaceDeclarationStructure[] {
         let operation: OpenAPIV3.OperationObject = pathItem[method]!;
-        function writeParams(typeBuilder: TypeBuilder, paramsIn: string): WriterFunction {
-            return writer => {
-                writer.write('{');
-                for (let parameter of operation.parameters || []) {
-                    if (parameter.in === paramsIn) {
-                        writer.write(parameter.name);
-                        if (parameter.schema) {
-                            writer.write(':');
-                            typeBuilder.createTypeLiteral(parameter.schema)(writer);
-                        }
-                        writer.write(',');
+        const writeParams = (
+            typeBuilder: TypeBuilder,
+            paramsIn: string
+        ): WriterFunction => writer => {
+            writer.write('{');
+            for (let parameter of this.joinParameters(operation.parameters, pathItem.parameters)) {
+                if (parameter.in === paramsIn) {
+                    writer.write(parameter.name);
+                    if (parameter.schema) {
+                        writer.write(':');
+                        typeBuilder.createTypeLiteral(parameter.schema)(writer);
                     }
+                    writer.write(',');
                 }
-                writer.write('}');
-            };
-        }
+            }
+            writer.write('}');
+        };
         let query: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: 'query',
             type: writeParams(this.typeBuilder, 'query')
         };
-        let params: PropertySignatureStructure = {
+        let headers: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: 'headers',
             type: writeParams(this.typeBuilder, 'header')
         };
+        let header: PropertySignatureStructure = {
+            kind: StructureKind.PropertySignature,
+            name: 'header',
+            type: writeParams(this.typeBuilder, 'header')
+        };
+        let params: PropertySignatureStructure = {
+            kind: StructureKind.PropertySignature,
+            name: 'params',
+            type: writeParams(this.typeBuilder, 'params')
+        };
         return [
+            {
+                kind: StructureKind.Interface,
+                name: this.toTypeName(path, method, 'Request'),
+                extends: ['koa.Request'],
+                isExported: true,
+                properties: [query, headers, header, params]
+            },
             {
                 kind: StructureKind.Interface,
                 name: this.toTypeName(path, method, 'Context'),
                 extends: ['koa.Context'],
                 isExported: true,
-                properties: [query, params]
+                properties: [
+                    query,
+                    headers,
+                    header,
+                    {
+                        kind: StructureKind.PropertySignature,
+                        name: 'request',
+                        type: this.toTypeName(path, method, 'Request')
+                    }
+                ]
             }
         ];
     }
