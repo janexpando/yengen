@@ -100,7 +100,7 @@ export class TypeBuilder {
         };
     }
 
-    private createTypeLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
+    createTypeLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
         return (writer: CodeBlockWriter): void => {
             if (this.typeMap.has(schema)) {
                 writer.write(sanitizeName(this.typeMap.get(schema)));

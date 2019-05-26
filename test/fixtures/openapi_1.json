@@ -7,6 +7,15 @@
     "paths": {
         "/products": {
             "get": {
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "includeThings",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
                 "responses": {
                     "default": {
                         "content": {
