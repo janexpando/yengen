@@ -100,9 +100,10 @@ export class TypeBuilder {
         };
     }
 
-    createTypeLiteral(schema: OpenAPIV3.SchemaObject): WriterFunction {
+    createTypeLiteral(schema: OpenAPIV3.SchemaObject, useNamespace?: string): WriterFunction {
         return (writer: CodeBlockWriter): void => {
             if (this.typeMap.has(schema)) {
+                if (useNamespace) writer.write(`${useNamespace}.`);
                 writer.write(sanitizeName(this.typeMap.get(schema)));
                 return;
             }
@@ -125,7 +126,7 @@ export class TypeBuilder {
                     writer.write('number');
                     break;
                 case 'array':
-                    let result = this.createTypeLiteral(schema.items);
+                    let result = this.createTypeLiteral(schema.items, useNamespace);
                     result(writer);
                     writer.write('[]');
                     break;
@@ -133,7 +134,7 @@ export class TypeBuilder {
                     writer.inlineBlock(() => {
                         _.forOwn(schema.properties, (schema, key) => {
                             writer.write(key + ': ');
-                            this.createTypeLiteral(schema)(writer);
+                            this.createTypeLiteral(schema, useNamespace)(writer);
                             writer.write(';').newLineIfLastNot();
                         });
                     });

@@ -55,6 +55,13 @@
                     "schema": {
                         "type": "string"
                     }
+                },
+                {
+                    "in": "header",
+                    "name": "ApiKey",
+                    "schema": {
+                        "type": "string"
+                    }
                 }
             ],
             "get": {

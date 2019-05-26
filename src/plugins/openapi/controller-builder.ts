@@ -87,12 +87,14 @@ export class ControllerBuilder {
         let operation: OpenAPIV3.OperationObject = pathItem[method]!;
         const writeParams = (
             typeBuilder: TypeBuilder,
-            paramsIn: string
+            paramsIn: string,
+            markNonRequired: boolean
         ): WriterFunction => writer => {
             writer.write('{');
             for (let parameter of this.joinParameters(operation.parameters, pathItem.parameters)) {
                 if (parameter.in === paramsIn) {
                     writer.write(parameter.name);
+                    if (markNonRequired && !parameter.required) writer.write('?');
                     if (parameter.schema) {
                         writer.write(':');
                         typeBuilder.createTypeLiteral(parameter.schema)(writer);
@@ -105,22 +107,44 @@ export class ControllerBuilder {
         let query: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: 'query',
-            type: writeParams(this.typeBuilder, 'query')
+            type: writeParams(this.typeBuilder, 'query', true)
         };
         let headers: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: 'headers',
-            type: writeParams(this.typeBuilder, 'header')
+            type: writeParams(this.typeBuilder, 'header', true)
         };
         let header: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: 'header',
-            type: writeParams(this.typeBuilder, 'header')
+            type: writeParams(this.typeBuilder, 'header', true)
         };
         let params: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: 'params',
-            type: writeParams(this.typeBuilder, 'params')
+            type: writeParams(this.typeBuilder, 'path', false)
+        };
+
+        let body: PropertySignatureStructure = {
+            kind: StructureKind.PropertySignature,
+            hasQuestionToken: operation.requestBody && !operation.requestBody.required,
+            name: 'body',
+            type: writer => {
+                if (!operation.requestBody || !operation.requestBody.content) {
+                    return writer.write('undefined');
+                }
+                let content = operation.requestBody.content;
+                let keys = Object.keys(content);
+                if (keys.length == 0) {
+                    return writer.write('undefined');
+                }
+                let media: OpenAPIV3.MediaTypeObject = content[keys[0]];
+                if (media && media.schema) {
+                    this.typeBuilder.createTypeLiteral(media.schema, 'ApiSchemas')(writer);
+                } else {
+                    return writer.write('undefined');
+                }
+            }
         };
         return [
             {
@@ -128,7 +152,7 @@ export class ControllerBuilder {
                 name: this.toTypeName(path, method, 'Request'),
                 extends: ['koa.Request'],
                 isExported: true,
-                properties: [query, headers, header, params]
+                properties: [query, headers, header, params, body]
             },
             {
                 kind: StructureKind.Interface,
@@ -237,7 +261,7 @@ export class ControllerBuilder {
                     .write(',')
                     .newLine()
                     .write('handler: ')
-                    .write(`this.handle${pascalCase(method)}.bind(this)`);
+                    .write(`<any>this.handle${pascalCase(method)}.bind(this)`);
             })
             .write(')');
     }
