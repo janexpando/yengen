@@ -3,6 +3,7 @@ import {
     CodeBlockWriter,
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
+    PropertyDeclarationStructure,
     PropertySignatureStructure,
     StatementStructures,
     StructureKind,
@@ -12,11 +13,19 @@ import { JoiSchemaBuilder } from './joi-schema-builder';
 import { OpenAPIV3 } from './openapi-types';
 import { TypeBuilder } from './type-builder';
 import _ = require('lodash');
+import MediaTypeObject = OpenAPIV3.MediaTypeObject;
 import ParameterObject = OpenAPIV3.ParameterObject;
 import RequestBodyObject = OpenAPIV3.RequestBodyObject;
-import MediaTypeObject = OpenAPIV3.MediaTypeObject;
 
-type HttpOperation = 'get' | 'put' | 'post' | 'delete' | 'options' | 'head' | 'patch' | 'trace';
+type HttpOperation =
+    | 'get'
+    | 'put'
+    | 'post'
+    | 'delete'
+    | 'options'
+    | 'head'
+    | 'patch'
+    | 'trace';
 const HTTP_OPERATIONS: HttpOperation[] = [
     'get',
     'put',
@@ -27,6 +36,7 @@ const HTTP_OPERATIONS: HttpOperation[] = [
     'patch',
     'trace'
 ];
+
 export class ControllerBuilder {
     constructor(
         private document: OpenAPIV3.Document,
@@ -36,9 +46,12 @@ export class ControllerBuilder {
 
     createControllers(): StatementStructures[] {
         const statements: StatementStructures[] = [];
-        _.forOwn(this.document.paths, (pathItem: OpenAPIV3.PathItemObject, path: string) => {
-            statements.push(...this.createController(path, pathItem));
-        });
+        _.forOwn(
+            this.document.paths,
+            (pathItem: OpenAPIV3.PathItemObject, path: string) => {
+                statements.push(...this.createController(path, pathItem));
+            }
+        );
         return [
             {
                 kind: StructureKind.ImportDeclaration,
@@ -80,7 +93,10 @@ export class ControllerBuilder {
             })
             .join('');
     }
-    private joinParameters(...listOfLists: (ParameterObject[] | undefined)[]): ParameterObject[] {
+
+    private joinParameters(
+        ...listOfLists: (ParameterObject[] | undefined)[]
+    ): ParameterObject[] {
         let result: ParameterObject[] = [];
         for (let parameters of listOfLists) {
             if (parameters) result.push(...parameters);
@@ -88,7 +104,9 @@ export class ControllerBuilder {
         return result;
     }
 
-    getRequetsBodyContentSchema(rbo: RequestBodyObject | undefined): MediaTypeObject | null {
+    getRequetsBodyContentSchema(
+        rbo: RequestBodyObject | undefined
+    ): MediaTypeObject | null {
         if (!rbo || !rbo.content) return null;
         let keys = Object.keys(rbo.content);
         if (keys.length == 0) {
@@ -110,10 +128,14 @@ export class ControllerBuilder {
             markNonRequired: boolean
         ): WriterFunction => writer => {
             writer.write('{');
-            for (let parameter of this.joinParameters(operation.parameters, pathItem.parameters)) {
+            for (let parameter of this.joinParameters(
+                operation.parameters,
+                pathItem.parameters
+            )) {
                 if (parameter.in === paramsIn) {
                     writer.write(parameter.name);
-                    if (markNonRequired && !parameter.required) writer.write('?');
+                    if (markNonRequired && !parameter.required)
+                        writer.write('?');
                     if (parameter.schema) {
                         writer.write(':');
                         typeBuilder.createTypeLiteral(parameter.schema)(writer);
@@ -146,12 +168,18 @@ export class ControllerBuilder {
 
         let body: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
-            hasQuestionToken: operation.requestBody && !operation.requestBody.required,
+            hasQuestionToken:
+                operation.requestBody && !operation.requestBody.required,
             name: 'body',
             type: writer => {
-                let media = this.getRequetsBodyContentSchema(operation.requestBody);
+                let media = this.getRequetsBodyContentSchema(
+                    operation.requestBody
+                );
                 if (media && media.schema) {
-                    this.typeBuilder.createTypeLiteral(media.schema, 'ApiSchemas')(writer);
+                    this.typeBuilder.createTypeLiteral(
+                        media.schema,
+                        'ApiSchemas'
+                    )(writer);
                 } else {
                     return writer.write('undefined');
                 }
@@ -191,7 +219,9 @@ export class ControllerBuilder {
         let result: InterfaceDeclarationStructure[] = [];
         for (let method of HTTP_OPERATIONS) {
             if (pathItem[method]) {
-                result.push(...this.createRouteContextType(path, method, pathItem));
+                result.push(
+                    ...this.createRouteContextType(path, method, pathItem)
+                );
             }
         }
         return result;
@@ -225,7 +255,20 @@ export class ControllerBuilder {
         );
     }
 
-    createController(path: string, pathItem: OpenAPIV3.PathItemObject): StatementStructures[] {
+    createController(
+        path: string,
+        pathItem: OpenAPIV3.PathItemObject
+    ): StatementStructures[] {
+        let properties: PropertyDeclarationStructure[] = [];
+        for (let method of this.availableMethods(pathItem)) {
+            properties.push({
+                kind: StructureKind.Property,
+                name: `validate${pascalCase(method)}`,
+                type: "createRouter.Config['validate']",
+                initializer: writer =>
+                    this.writeValidate(writer, path, pathItem, method)
+            });
+        }
         return [
             ...this.createContextTypes(path, pathItem),
             {
@@ -244,7 +287,8 @@ export class ControllerBuilder {
                             writer.write(';');
                         }
                     }
-                ]
+                ],
+                properties
             }
         ];
     }
@@ -267,10 +311,7 @@ export class ControllerBuilder {
                     .write(method)
                     .write('",')
                     .newLine()
-                    .write('validate: ');
-                this.writeValidate(writer, path, pathItem, method);
-                writer
-                    .write(',')
+                    .write(`validate: this.validate${pascalCase(method)},`)
                     .newLine()
                     .write('handler: ')
                     .write(`<any>this.handle${pascalCase(method)}.bind(this)`);
@@ -286,23 +327,72 @@ export class ControllerBuilder {
     ) {
         writer.inlineBlock(() => {
             if (pathItem[method]!.requestBody) {
-                let media = this.getRequetsBodyContentSchema(pathItem[method]!.requestBody);
+                let media = this.getRequetsBodyContentSchema(
+                    pathItem[method]!.requestBody
+                );
                 if (media && media.schema) {
                     writer.write('body: ');
-                    this.joiSchemaBuilder.getSchemaWriter(media.schema, false, 'JoiSchemas')(
-                        writer
-                    );
+                    this.joiSchemaBuilder.getSchemaWriter(
+                        media.schema,
+                        false,
+                        'JoiSchemas'
+                    )(writer);
+                    writer.write(',').newLine();
                 }
             }
+
+            const writeParams = (paramIn: string, writer: CodeBlockWriter) => {
+                for (let parameter of this.joinParameters(
+                    pathItem.parameters,
+                    pathItem[method]!.parameters
+                )) {
+                    if (parameter.in == paramIn) {
+                        writer.write(parameter.name);
+                        if (parameter.schema) {
+                            writer.write(': ');
+                            this.joiSchemaBuilder.getSchemaWriter(
+                                parameter.schema,
+                                false,
+                                'JoiSchemas'
+                            )(writer);
+                            writer.write(',');
+                        }
+                    }
+                }
+            };
+
+            writer
+                .write('params: ')
+                .inlineBlock(() => {
+                    writeParams('path', writer);
+                })
+                .write(', query: ')
+                .inlineBlock(() => {
+                    writeParams('query', writer);
+                })
+                .write(', header: ')
+                .inlineBlock(() => {
+                    writeParams('header', writer);
+                });
         });
     }
 
-    private writeRouter(writer: CodeBlockWriter, path: string, pathItem: OpenAPIV3.PathItemObject) {
+    private writeRouter(
+        writer: CodeBlockWriter,
+        path: string,
+        pathItem: OpenAPIV3.PathItemObject
+    ) {
         writer.write('createRouter()');
+        for (let method of this.availableMethods(pathItem)) {
+            this.writeRoute(writer, path, pathItem, method);
+        }
+    }
+
+    private *availableMethods(
+        pathItem: OpenAPIV3.PathItemObject
+    ): IterableIterator<HttpOperation> {
         for (let method of HTTP_OPERATIONS) {
-            if (pathItem[method]) {
-                this.writeRoute(writer, path, pathItem, method);
-            }
+            if (pathItem[method]) yield method;
         }
     }
 }

@@ -10,18 +10,18 @@ import { TypeMap } from './type-map';
 
 export interface OpenapiPluginConfig {
     openapiFile: string;
-    typingsFile: string;
-    joiSchemasFile: string;
+    outputFile: string;
     createTypings: boolean;
     createJoiSchemas: boolean;
+    createControllers: boolean;
 }
 
 const configSchema = object({
     openapiFile: string().default('./openapi.yml'),
-    typingsFile: string().default('./src/openapi/generated.ts'),
-    joiSchemasFile: string().default('./src/openapi/generated.ts'),
+    outputFile: string().default('./src/openapi/generated.ts'),
     createTypings: boolean().default(true),
-    createJoiSchemas: boolean().default(true)
+    createJoiSchemas: boolean().default(true),
+    createControllers: boolean().default(true),
 });
 
 export class OpenapiPlugin implements CodegenPlugin {
@@ -31,7 +31,7 @@ export class OpenapiPlugin implements CodegenPlugin {
         let project = new tm.Project({
             addFilesFromTsConfig: false
         });
-        let source: SourceFile = project.createSourceFile(this.config.typingsFile, '', {
+        let source: SourceFile = project.createSourceFile(this.config.outputFile, '', {
             overwrite: true
         });
         const statements: StatementStructures[] = [];
@@ -48,7 +48,7 @@ export class OpenapiPlugin implements CodegenPlugin {
             statements.push(...joiStatements);
         }
         source.set({ statements });
-        context.command.log('Emiting source file to ', this.config.typingsFile);
+        context.command.log('Emiting source file to ', this.config.outputFile);
         await project.save();
         return { ok: true };
     }
