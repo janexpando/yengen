@@ -26,7 +26,8 @@
         "rimraf": "^2.6.3",
         "swagger-parser": "^6.0.5",
         "ts-morph": "^2.1.0",
-        "tslib": "^1.9.3"
+        "tslib": "^1.9.3",
+        "typescript": "^3.4.5"
     },
     "devDependencies": {
         "@oclif/dev-cli": "^1.22.0",
@@ -40,8 +41,7 @@
         "mocha": "^5.2.0",
         "nyc": "^13.3.0",
         "ts-node": "^8.1.0",
-        "tslint": "^5.16.0",
-        "typescript": "^3.4.5"
+        "tslint": "^5.16.0"
     },
     "engines": {
         "node": ">=8.0.0"

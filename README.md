@@ -48,7 +48,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/generate.ts](https://github.com/janexpando/yengen/blob/v0.1.1/src/commands/generate.ts)_
+_See code: [lib/commands/generate.js](https://github.com/janexpando/yengen/blob/v0.1.1/lib/commands/generate.js)_
 
 ## `yengen help [COMMAND]`
 
@@ -79,7 +79,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/new/project.ts](https://github.com/janexpando/yengen/blob/v0.1.1/src/commands/new/project.ts)_
+_See code: [lib/commands/new/project.js](https://github.com/janexpando/yengen/blob/v0.1.1/lib/commands/new/project.js)_
 <!-- commandsstop -->
 
 #TODO:
