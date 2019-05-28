@@ -20,7 +20,7 @@ $ npm install -g yengen
 $ yengen COMMAND
 running command...
 $ yengen (-v|--version|version)
-yengen/0.0.0 linux-x64 node-v10.15.3
+yengen/0.1.0 linux-x64 node-v10.15.3
 $ yengen --help [COMMAND]
 USAGE
   $ yengen COMMAND
@@ -31,7 +31,7 @@ USAGE
 <!-- commands -->
 * [`yengen generate [FILE]`](#yengen-generate-file)
 * [`yengen help [COMMAND]`](#yengen-help-command)
-* [`yengen new:project [FILE]`](#yengen-newproject-file)
+* [`yengen new:project DIRPATH`](#yengen-newproject-dirpath)
 
 ## `yengen generate [FILE]`
 
@@ -41,13 +41,14 @@ describe the command here
 USAGE
   $ yengen generate [FILE]
 
+ARGUMENTS
+  FILE  [default: ./generate.ts] OpenAPI file location
+
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
-_See code: [src/commands/generate.ts](https://github.com/WebstormProjects/yengen/blob/v0.0.0/src/commands/generate.ts)_
+_See code: [src/commands/generate.ts](https://github.com/janexpando/yengen/blob/v0.1.0/src/commands/generate.ts)_
 
 ## `yengen help [COMMAND]`
 
@@ -66,21 +67,19 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.6/src/commands/help.ts)_
 
-## `yengen new:project [FILE]`
+## `yengen new:project DIRPATH`
 
 describe the command here
 
 ```
 USAGE
-  $ yengen new:project [FILE]
+  $ yengen new:project DIRPATH
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
-_See code: [src/commands/new/project.ts](https://github.com/janexpando/yengen/blob/v0.0.0/src/commands/new/project.ts)_
+_See code: [src/commands/new/project.ts](https://github.com/janexpando/yengen/blob/v0.1.0/src/commands/new/project.ts)_
 <!-- commandsstop -->
 
 #TODO:

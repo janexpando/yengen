@@ -1,6 +1,6 @@
 {
     "name": "yengen",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "author": "janexpando",
     "bin": {
         "yengen": "./bin/run"
