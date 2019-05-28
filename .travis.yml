@@ -13,6 +13,7 @@ deploy:
   provider: npm
   on:
     tags: true
+  skip_cleanup: true
   email: kremenh@gmail.com
   api_key:
     secure: qHpFWdjRNb/1bs4CoPXpP5mCB5zyl+UrRh4iA1XkGQQ8/gk8ZSN9SLULAlnWndsFuShBocbUqm3Gwu4IKY6+oX2m3BEJ4z30H7fWyHJoZGq6t/X+zRuuwt1ovqx8+ctJfFHrqPhlqdb8GURN2CWrK9fG2pMLpJqyLaXxt7RWGCNdLpAr7ACf2dURifVruMqKYUqSS3H//Dt3jDrg8mwEDDthQMSdi2y50+a5v6rKm+sjjaAWIp9T3BJZYRZSV5wo8EsMzweJmCDTUzT20bmv+JHuR3hUIRPvtjQhRlDu5cRpheYNmrlyxiZKNTWYK0eDFKiNwL4g2DxaWC8U0UIXxBRdYjcCN5U4Rq0EWlm/uSyN/HOpU/wKCMW+y9SwJfVy3qEGDP7xojJXlQSkRsKI2zra2WLOzD8quJ1+uPQOtgYi8qa4fHs6c29bM5yPVp+jfXLifykNi+iKX9QxLOOSlceoZ7RQbIF7otv7zAx6qF9W3s6Q+sYX7iir1xJSrejqw8vkJ6uwbWq36m338b9mpLUmTArHqYKRvQSBAAXoLlNfLF1nN83CjurnZsx/kHQfN8vsEmMtGMpNkaKGa5k0RQW51jSS+ycZyRY552kU8l3YrkBelppc8AsuxaDl1+rqFldjI5kouY1Gqx3wa5dhYGIAaMc6hLDEJ7yKjMzuDqg=
