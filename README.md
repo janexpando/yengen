@@ -20,7 +20,7 @@ $ npm install -g yengen
 $ yengen COMMAND
 running command...
 $ yengen (-v|--version|version)
-yengen/0.1.4 linux-x64 node-v10.15.3
+yengen/0.2.0 linux-x64 node-v10.16.0
 $ yengen --help [COMMAND]
 USAGE
   $ yengen COMMAND
@@ -48,7 +48,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [lib/commands/generate.js](https://github.com/janexpando/yengen/blob/v0.1.4/lib/commands/generate.js)_
+_See code: [lib/commands/generate.js](https://github.com/janexpando/yengen/blob/v0.2.0/lib/commands/generate.js)_
 
 ## `yengen help [COMMAND]`
 
@@ -65,7 +65,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.6/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.0/src/commands/help.ts)_
 
 ## `yengen new:project DIRPATH`
 
@@ -79,7 +79,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [lib/commands/new/project.js](https://github.com/janexpando/yengen/blob/v0.1.4/lib/commands/new/project.js)_
+_See code: [lib/commands/new/project.js](https://github.com/janexpando/yengen/blob/v0.2.0/lib/commands/new/project.js)_
 <!-- commandsstop -->
 
 #TODO:
