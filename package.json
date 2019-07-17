@@ -25,7 +25,7 @@
         "prettier": "^1.17.1",
         "rimraf": "^2.6.3",
         "swagger-parser": "^6.0.5",
-        "ts-morph": "^2.1.0",
+        "ts-morph": "^3.1.2",
         "tslib": "^1.9.3",
         "typescript": "^3.4.5"
     },

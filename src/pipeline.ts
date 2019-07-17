@@ -29,7 +29,3 @@ export function loadConfig(file: string): Config {
     let configModule = require(filePath);
     return configModule.default || configModule.config;
 }
-
-export async function loadConfigAndRunPipeline(file: string) {
-
-}

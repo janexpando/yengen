@@ -1,7 +1,12 @@
 import * as path from 'path';
-import { ImportDeclarationStructure, SourceFile, StatementStructures, StructureKind } from 'ts-morph';
-import { CodegenPlugin, Context, PluginResult } from '../../pipeline';
 import * as tm from 'ts-morph';
+import {
+    ImportDeclarationStructure,
+    StatementStructures,
+    StructureKind,
+    VariableDeclarationKind
+} from 'ts-morph';
+import { CodegenPlugin, Context, PluginResult } from '../../pipeline';
 
 /**
  * The object should be structured that from process root you can do
@@ -26,36 +31,78 @@ export interface IocConfig {
     outputFile?: string;
 }
 
-export function createAddressImport(location: string, address: ImportAddress, importAs: string): ImportDeclarationStructure {
+export function createAddressImport(
+    location: string,
+    address: ImportAddress,
+    importAs: string
+): ImportDeclarationStructure {
     let relativeLocation = path.relative(location, address.path);
     return {
         kind: StructureKind.ImportDeclaration,
-        namedImports: [{ kind: StructureKind.ImportSpecifier, alias: importAs, name: address.name }],
+        namedImports: [
+            {
+                kind: StructureKind.ImportSpecifier,
+                alias: importAs,
+                name: address.name
+            }
+        ],
         moduleSpecifier: relativeLocation
     };
 }
 
-export function createProviders(context: IocContext, location: string): StatementStructures[] {
-    let statements: StatementStructures[] = [];
+export function createProviders(
+    context: IocContext,
+    location: string
+): StatementStructures[] {
+    let imports: StatementStructures[] = [];
+    let providers: string[] = [];
     for (let i = 0; i < context.toProvide.length; i++) {
         let address = context.toProvide[i];
-        statements.push(createAddressImport(location, address, `providers_${i}`));
+        let providerName = `providers_${i}`;
+        imports.push(createAddressImport(location, address, providerName));
+        providers.push(providerName);
     }
-    return statements;
+    return [
+        ...imports,
+        {
+            kind: StructureKind.VariableStatement,
+            declarationKind: VariableDeclarationKind.Const,
+            isExported: true,
+            declarations: [
+                {
+                    type: 'Provider[]',
+                    name: 'PROVIDERS',
+                    initializer: `[ ${providers.join(', ')} ]`
+                }
+            ]
+        }
+    ];
 }
 
 export class IocPlugin implements CodegenPlugin<IocContext> {
     constructor(private config: IocConfig) {
-        if (!config.outputFile) this.config.outputFile = 'src/generated/providers.ts';
+        if (!config.outputFile)
+            this.config.outputFile = 'src/generated/providers.ts';
     }
 
     async run(context: IocContext): Promise<PluginResult> {
         let project = new tm.Project({
             addFilesFromTsConfig: false
         });
-        project.createSourceFile(this.config.outputFile!, {
-            statements: [...createProviders(context, this.config.outputFile!)]
-        });
+        project.createSourceFile(
+            this.config.outputFile!,
+            {
+                statements: [
+                    {
+                        kind: StructureKind.ImportDeclaration,
+                        namedImports: [{ name: 'Provider' }],
+                        moduleSpecifier: 'injection-js'
+                    },
+                    ...createProviders(context, this.config.outputFile!)
+                ]
+            },
+            { overwrite: true }
+        );
         await project.save();
         return {
             ok: true
