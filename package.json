@@ -5,7 +5,7 @@
     "bin": {
         "yengen": "./bin/run"
     },
-    "bugs": "https://github.com/janexpando/yengen/issues",
+    "bugs": "https://github.com/captain-refactor/yengen/issues",
     "dependencies": {
         "@oclif/command": "^1.5.13",
         "@oclif/config": "^1.13.0",
